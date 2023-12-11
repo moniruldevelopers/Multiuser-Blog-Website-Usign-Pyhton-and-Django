@@ -6,33 +6,13 @@
 {% endblock title %}
 
 {% block content %}
-<style>
-    .notification-item {
-      border: 1px solid #dee2e6;
-      border-radius: 8px;
-      margin-bottom: 10px;
-      transition: background-color 0.3s;
-    }
-  
-    .notification-item:hover {
-      background-color: #f8f9fa;
-    }
-  
-    .notification-link {
-      color: #007bff;
-      text-decoration: none;
-    }
-  
-    .notification-link:hover {
-      text-decoration: underline;
-    }
-  </style>
+
   
 <section class="notifications">
     <div class="container">
         <div class="row justify-content-center mt-5">
             <div class="col-md-8">
-                <h2 class="text-center mb-4">Notifications</h2>
+                <h2 class="text-center mb-4">Notifications <i class="fa fa-bell"></i></h2>
                 {% if notifications %}
                     <ul class="list-group list-group-flush">
                         {% for notification in notifications|slice:"50" %}
