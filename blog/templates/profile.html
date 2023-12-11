@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+  My Profile
+{% endblock title %}
+
+
+{% block content %}
+
+<div class="profile">
+    <div class="container">
+        <div class="row py-3">
+            <div class="col-md-4">
+                <p class="text-center" style="text-transform: capitalize;">{{ greeting }}, {{user.first_name}} {{user.last_name}}</p>
+                <div class="text-center view-profile">
+                    
+                    <img id="account_img" class="rounded rounded-circle profile-picture" src="{{request.user.get_profile_picture}}" alt="">
+                  
+                    <div class="sidebar-heading seven">
+                         Name: 
+                        <h2 style="color: white; font-weight: bold;">{{account.username}}</h2>
+                      </div>
+                    <ul class="text-center py-1 ">
+                        <li class="py-2">
+                            <span>Posts: <strong>{{account.user_blogs.count}}</strong></span>
+                        </li>
+                        <li class="py-1">
+                            <span>Followers: <strong>{{account.user_followers.count}}</strong></span>
+                        </li>
+                        <li class="py-1">
+                            <span>Following: <strong>{{account.user_follows.count}}</strong></span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="text-center pt-2 pb-1">
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                        <i class="fa fa-edit"></i> Update Profile Picture
+                    </button>
+                    
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Select Profile Picture 200*200 pixel</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            </div>
+                            <div class="modal-body">
+                            <form action ="{% url 'change_profile_picture' %}" method="POST" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="form-group pb-1">
+                                    <input class="form-control" type="file" name="profile_image" required>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save changes</button>     
+                                </div>
+                            </form>
+                            </div>                           
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                <ul class="list-group text-center mt-2 mb-5  ">
+                                      
+                    <a href="{% url 'my_blogs' %}" class="btn btn-info btn-lg  mb-3 " role="button" aria-pressed="true"><i class="fa fa-list"></i> My Blogs</a>
+                    <a href="{% url 'add_blog' %}" class="btn btn-dark btn-lg " role="button" aria-pressed="true"><i class="fa fa-plus-square"></i> Add Blogs</a>
+                                       
+                </ul>
+            </div>
+            <div class="col-md-8">
+                <div class="sidebar-heading seven">                   
+                    <h2 style="font-weight: bold;">Update Info </h2>
+                  </div>
+                <form  class="px-5" action="{% url 'profile' %}" method="POST">
+                    {% csrf_token %}
+                    {% if messages %}
+                        <div class="form-group">                          
+                        {% include 'message.html' %}                           
+                        </div>
+                    {% endif %} 
+                                            
+                    {% if form.non_field_errors %}                            
+                        {% for error in form.non_field_errors %}
+                        <div class="alert ">                       
+                            <p class="text-danger ">{{error}}</p>
+                        </div>
+                        {% endfor %}                                
+                    {% endif %}
+                            
+                    <div class="form-group">
+                        <label for="firstname">First Name:</label>
+                        <input class="form-control" name="first_name" type="text" value="{{account.first_name}}">
+                        <p class="py-1 text-danger errors">{{form.first_name.errors}}</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastname">Last Name:</label>
+                        <input class="form-control" name="last_name" type="text" value="{{account.last_name}}">
+                        <p class="py-1 text-danger errors">{{form.last_name.errors}}</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="username">User Name:</label>
+                        <input class="form-control" name="username" type="text" value="{{account.username}}">
+                        <p class="py-1 text-danger errors">{{form.username.errors}}</p>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input class="form-control" name="email" type="email" value="{{account.email}}">
+                        <p class="py-1 text-danger errors">{{form.email.errors}}</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="new_password">New Password:</label>
+                        <input class="form-control" name="new_password" type="password" value="" autocomplete="new-password">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="confirm_password">Confirm Password:</label>
+                        <input  class="form-control" name="confirm_password" type="password" value="">
+                    </div>
+                    
+                    <div class="form-group mt-2">
+                        <button class="btn btn-primary"><i class="fa fa-upload"></i> Update</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+        
+    </div>
+</div>
+
+{% endblock content %}
+  

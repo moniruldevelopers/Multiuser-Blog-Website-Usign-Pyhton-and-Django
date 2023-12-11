@@ -1,0 +1,62 @@
+{% load static %}
+
+
+
+
+{% for site in site %}
+  
+<style>
+  .custom-container {
+      padding-left: 0;
+      padding-right: 0;
+  }
+</style>
+<div class="container">
+  {% for ad in latest_ad %}
+  <a target="_blank" href="{{ad.ad3_url}}"><img  style="width: fit-content; height: 225px; " src="{{ad.ad3.url}}" alt=""></a>
+{% endfor %} 
+</div>
+ 
+
+<div  class="container-fluid my-3 custom-container">
+<footer class=" text-center text-white" style="background-color: #1F1844;">  
+
+  <!-- Grid container -->
+  <div class="container-fluid p-3 pb-0">
+    <!-- Section: Social media -->
+    <section class="mb-1">
+      <a class="btn btn-outline-light btn-floating m-1" href="#" role="button"
+        >Download App  <i class="fa fa-android"></i
+      ></a>
+      <!-- Facebook -->
+      <a class="btn btn-outline-light btn-floating m-1" href="#" role="button"
+        ><i class="fa fa-facebook-f"></i  
+      ></a> 
+      <!-- Linkedin -->
+      <a class="btn btn-outline-light btn-floating m-1" href="#" role="button"
+        > <i class="fa fa-linkedin"></i
+      ></a>
+      <!-- Github -->
+      <a class="btn btn-outline-light btn-floating m-1" href="#" role="button"
+        ><i class="fa fa-github"></i
+      ></a>
+      <!-- Github -->
+    
+    </section>
+
+  </div>
+
+
+  <!-- Copyright -->
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+    <a  class="text-white" target="_blank" href="https://ugv.edu.bd/">© 2024 Copyright By University Of Global Village, Barishal</a> ||
+    <a class="text-white"  href="{% url 'about' %}">About Us</a> ||
+    <a class="text-white" target="_blank" href="https://www.facebook.com/moniruldevelopers"> Developed By Monirul Islam</a>
+  </div>
+  <!-- Copyright -->
+</footer>
+  
+</div>
+<!-- End of .container -->
+
+{% endfor %}

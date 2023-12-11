@@ -1,0 +1,22 @@
+{% load static %}
+<div class="col-lg-12">
+    <ul class="page-numbers">
+        {% if blogs.has_previous %}
+            <li><a href="?page={{ blogs.previous_page_number }}"><i class="fa fa-angle-double-left"></i></a></li>
+        {% endif %}
+
+        {% for page in blogs.paginator.page_range %}
+            {% if blogs.number == page %}
+                <li class="active"><a href="?page={{ page }}">{{ page }}</a></li>
+            {% elif page > blogs.number|add:'-3' and page < blogs.number|add:'3' %}
+                <li><a href="?page={{ page }}">{{ page }}</a></li>
+            {% elif page == blogs.number|add:'-3' or page == blogs.number|add:'3' %}
+                <li class="dots">...</li>
+            {% endif %}
+        {% endfor %}
+
+        {% if blogs.has_next %}
+            <li><a href="?page={{ blogs.next_page_number }}"><i class="fa fa-angle-double-right"></i></a></li>
+        {% endif %}
+    </ul>
+</div>

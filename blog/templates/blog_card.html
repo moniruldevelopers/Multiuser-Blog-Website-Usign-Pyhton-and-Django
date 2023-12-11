@@ -1,0 +1,38 @@
+{% load static %}
+
+<div class="col-lg-6">
+  <div class="blog-card mb-3">
+    <div class="blog-thumb thumbnail">
+      <img class="zoom-on-hover" style="height: 250px;" src="{{blog.banner.url}}" alt="{{blog.title}}">
+    </div>
+    <div class="down-content">
+      <span class="category-badge">{{blog.category}}</span>
+      <a href="{% url 'blog_details' blog.slug %}">
+        <h4 style="color: #1F1844">{{blog.title}}</h4>
+      </a>
+      <ul class="post-info">
+        <li><a href="javascript:void(0);"> Views: {{blog.views}} <i class="fa fa-eye" aria-hidden="true"></i></a></li>
+        <li id="like-count" >{{blog.likes.count}} Reacts</li>
+        <li><a href="{% url 'blog_details' blog.slug %}"><i class="fa fa-comment"></i> {{blog.blog_comments.all.count}} Comments</a></li>
+        <li><a href="{% url 'view_user_information' blog.user.username %}"><i class="fa fa-user"></i> {{blog.user.username}}</a></li>
+        <li><a href="javascript:void(0);"><i class="fa fa-calendar"></i> {{blog.created_date}}</a></li>
+      </ul>
+      <div class="post-options">
+        <div class="row">
+          <div class="col-lg-12">
+            <ul class="post-tags">
+              <li><i class="fa fa-tags"></i></li>              
+              {% if blog.tags.all.count > 0 %}
+                {% for tag in blog.tags.all %}
+                  <li><a  href="{% url 'tag_blogs' tag.slug %}">{{tag.title}}</a></li>
+                {% endfor %}  
+              {% else %}
+                None
+              {% endif %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,123 @@
+{% load static %}
+<div class="col-lg-4">
+    <div class="sidebar">
+      <div class="row">
+
+        <div class="col-lg-12">
+          <div class="sidebar-item categories">
+            <div class="sidebar-heading seven">
+              <h2>Add section</h2>
+            </div>
+            <div class="content " style="text-transform: uppercase;"> 
+            {% for ad in latest_ad %}
+              <a target="_blank" href="{{ad.ad1_url}}"><img  style="width: 100%;" src="{{ad.ad1.url}}" alt=""></a>
+            {% endfor %} 
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-lg-12">
+          <div class="sidebar-item recent-posts">
+            <div class="sidebar-heading seven">
+              <h2>Popular Blogs</h2>
+            </div>
+            <div class="content">
+              <ul>               
+                {% for blog in populars|slice:"15" %}
+                  <li>
+                    <a href="{% url 'blog_details' blog.slug %}">
+                      <div class="media thumbnail-container">
+                        <img class="mr-3 thumbnail-img" src="{{blog.banner.url}}" alt="{{blog.title}}" style="width: 70px; height: 70px;">
+                        <div class="media-body">
+                          <h5 class="mt-0">{{blog.title|truncatechars:30}}</h5>
+                          <span><i class="fa fa-calendar"></i> {{blog.created_date}}</span>
+                        </div>
+                      </div>
+                    </a>
+                  </li>
+                {% endfor %} 
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-lg-12">
+          <div class="sidebar-item recent-posts">
+            <div class="sidebar-heading seven">
+              <h2>Recent Blogs</h2>
+            </div>
+            <div class="content">
+              <ul>               
+                {% for blog in blogs|slice:"5" %}
+                  <li>
+                    <a href="{% url 'blog_details' blog.slug %}">
+                      <div class="media thumbnail-container">
+                        <img class="mr-3 thumbnail-img" src="{{blog.banner.url}}" alt="{{blog.title}}" style="width: 70px; height: 70px;">
+                        <div class="media-body">
+                          <h5 class="mt-0">{{blog.title|truncatechars:30}}</h5>
+                          <span><i class="fa fa-calendar"></i> {{blog.created_date}}</span>
+                        </div>
+                      </div>
+                    </a>
+                  </li>
+                {% endfor %} 
+
+                
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12">
+          <div class="sidebar-item categories">
+            <div class="sidebar-heading seven">
+              <h2>Categories</h2>
+            </div>
+            <div class="content " style="text-transform: uppercase;">
+              <ul>
+                {% for category_count in category_counts %}
+                <li>
+                <a href="{% url 'category_blogs' category_count.category.slug %}">
+                <i class="fa fa-list fa-xs" style="color: #f5831f;"></i>
+                {{ category_count.category.title }}: ( {{ category_count.blog_count }} ) blogs
+                </a>
+                </li>
+                {% endfor %} 
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12">
+          <div class="sidebar-item tags">
+            <div class="sidebar-heading seven">
+              <h2>Tag Clouds</h2>
+            </div>
+            <div class="content">
+              <ul>                
+              {% for tag in tags %}
+                <li><a class="tag-cloud" href="{% url 'tag_blogs' tag.slug %}"><i class="fa fa-tag"></i> {{tag.title}}</a></li>
+              {% endfor %}            
+             </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12 mb-5">
+          <div class="sidebar-item categories">
+            <div class="sidebar-heading seven">
+              <h2>Add section</h2>
+            </div>
+            <div class="content " style="text-transform: uppercase;"> 
+            {% for ad in latest_ad %}
+              <a target="_blank" href="{{ad.ad2_url}}"><img  style="width: 100%;" src="{{ad.ad2.url}}" alt=""></a>
+            {% endfor %} 
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12">
+          <div class="fb-page" 
+          data-href="https://www.facebook.com/ugvbarisal"
+          data-width="380" 
+          data-hide-cover="false"
+          data-show-facepile="false"></div>              
+      </div>
+   
+</div>

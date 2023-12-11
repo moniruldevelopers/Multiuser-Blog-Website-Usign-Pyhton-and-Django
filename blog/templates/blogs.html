@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    Blogs
+{% endblock title %}
+  
+
+{% block content %}
+<section class="blog-posts grid-system">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 py-3 mb-2 sidebar-heading seven">
+          <h2>Total Blogs ( {{paginator.object_list.count}} )</h2>
+        </div>
+        <div class="col-lg-8">
+          <div class="all-blog-posts">
+            <div class="row">
+              {% for blog in blogs %}
+              {% include 'blog_card.html' %}
+              {% endfor %}
+            {% include 'pagination.html' %}
+            </div>
+          </div>
+        </div>
+        {% include 'sidebar.html' %}
+       </div>
+    </div>
+  </section>
+
+{% endblock content %}
+    

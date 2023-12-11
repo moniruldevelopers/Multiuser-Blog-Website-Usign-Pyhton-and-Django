@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+  Notifications
+{% endblock title %}
+
+{% block content %}
+<style>
+    .notification-item {
+      border: 1px solid #dee2e6;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      transition: background-color 0.3s;
+    }
+  
+    .notification-item:hover {
+      background-color: #f8f9fa;
+    }
+  
+    .notification-link {
+      color: #007bff;
+      text-decoration: none;
+    }
+  
+    .notification-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+  
+<section class="notifications">
+    <div class="container">
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-8">
+                <h2 class="text-center mb-4">Notifications</h2>
+                {% if notifications %}
+                    <ul class="list-group list-group-flush">
+                        {% for notification in notifications|slice:"50" %}
+                            {% if notification.content_object %}
+                                <li class="list-group-item notification-item">
+                                    {% if notification.notification_types == 'Blog' or notification.notification_types == 'Like' %}
+                                        <a class="text-decoration-none notification-link" href="{% if notification.content_object.slug %}{% url 'blog_details' notification.content_object.slug %}{% endif %}">
+                                            <p>{{notification.text}}</p>
+                                            <p class="text-muted">{{notification.created_date|timesince}} ago</p>
+                                        </a>
+                                    {% else %}
+                                        <a class="text-decoration-none notification-link" href="{% url 'view_user_information' notification.content_object.followed_by.username %}">
+                                            <p>{{notification.text}}</p>
+                                            <p class="text-muted">{{notification.created_date|timesince}} ago</p>
+                                        </a>
+                                    {% endif %}
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="text-center">No notifications yet.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
