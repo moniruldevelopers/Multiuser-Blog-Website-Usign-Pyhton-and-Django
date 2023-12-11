@@ -8,6 +8,15 @@
 
 {% block content %}
 
+<style>
+    .list-group-item li {
+        transition: background-color 0.3s;
+    }
+
+    .list-group-item li:hover {
+        background-color: #f5f5f5; /* Change this to your desired hover background color */
+    }
+</style>
 <div class="profile">
     <div class="container">
         <div class="row py-3">
@@ -62,15 +71,17 @@
               <div class="col-md-12">
                 <ul class="list-group-item">
                 
-                    {% for blog in account.user_blogs.all reversed %}     
-                    <li class="list-group-item py-3">
+                    {% for blog in blogs  %}     
+                    <li class="list-group-item py-1">
                         <a href="{% url 'blog_details' blog.slug %}">
                             <p>{{blog.title}}</p>
                             <p>{{blog.created_date}}</p>
                         </a>
                     </li>
                     {% endfor %}
+                    
                 </ul>
+                {% include 'pagination.html' %}
               </div>
             </div>
            

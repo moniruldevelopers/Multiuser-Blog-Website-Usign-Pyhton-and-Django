@@ -9,6 +9,9 @@ from django.contrib.auth.decorators import login_required
 from .models import User,Follow
 from datetime import datetime
 from notification.models import Notification
+
+from django.core.paginator import PageNotAnInteger, EmptyPage, Paginator
+
 # Create your views here.
 
 
@@ -128,6 +131,18 @@ def view_user_information(request,username):
     account = get_object_or_404(User, username=username)    
     following =False
     muted = None
+    # for pagination
+    blogs = account.user_blogs.order_by('-created_date')
+    page = request.GET.get('page', 1)
+    paginator = Paginator(blogs, 10)  # Show 10 blogs per page
+    try:
+        blogs = paginator.page(page)
+    except PageNotAnInteger:
+        blogs = paginator.page(1)
+    except EmptyPage:
+        blogs = paginator.page(paginator.num_pages)
+    # end pagination
+
     
     if request.user.is_authenticated:
         if request.user.id == account.id:
@@ -148,6 +163,7 @@ def view_user_information(request,username):
         "account": account,
         "following": following,
         "muted": muted,
+        "blogs":blogs,
     }
     return render(request, "user_information.html", context)
 @login_required(login_url='login')

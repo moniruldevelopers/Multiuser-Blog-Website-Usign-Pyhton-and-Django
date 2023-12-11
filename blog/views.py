@@ -14,7 +14,7 @@ from django.utils.text import slugify
 # Create your views here.
 def home(request):  
     blogs = Blog.objects.order_by('-created_date')
-    most_liked = Blog.objects.order_by('-likes')[:15]
+    most_liked = Blog.objects.order_by('-likes')[:15]    
     populars = Blog.objects.order_by('-views')[:15]
     tags = Tag.objects.order_by('-created_date')[:15]  
     context = {

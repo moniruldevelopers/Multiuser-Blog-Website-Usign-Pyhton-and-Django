@@ -6,7 +6,7 @@
 <div class="main-banner header-text">
   <div class="container-fluid">
     <div class="owl-banner owl-carousel">
-      {% for blog in most_liked|slice:"7" %}
+      {% for blog in most_liked|slice:"20" %}
         <div class="item blog-card">
           <img  class="zoom-on-hover" style="height: 350px;" src="{{blog.banner.url}}" alt="{{blog.title}}">
           <div class="item-content">
