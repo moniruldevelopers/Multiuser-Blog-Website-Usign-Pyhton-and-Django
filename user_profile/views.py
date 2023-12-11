@@ -212,3 +212,5 @@ def mute_or_unmute_user(request, user_id):
         instance.muted = True
         instance.save()
     return redirect('view_user_information', username=user.username)
+
+

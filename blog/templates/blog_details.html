@@ -29,10 +29,10 @@
                     <a href="javascript:void(0);"><h4>{{blog.title}}</h4></a>
                     <ul class="post-info">
                     <li><a href="javascript:void(0);"> Views: {{blog.views}} <i class="fa fa-eye" aria-hidden="true"></i></a></li>
-                    <li><a href="javascript:void(0);"><i class="fa fa-comment"></i> {{blog.blog_comments.all.count}} Comments</a></li>
+                    <li ><a href="#comment"><i class="fa fa-comment"></i> {{blog.blog_comments.all.count}} Comments</a></li>
                     <li><a href="{% url 'view_user_information' blog.user.username %}"><i class="fa fa-user"></i> {{blog.user.username}}</a></li>
                     <li><a href="javascript:void(0);"><i class="fa fa-calendar"></i> {{blog.created_date}}</a></li>
-                    <a href="{% url 'add_to_wishlist' slug=blog.slug %}"><i class="fa fa-bookmark"></i></a>
+                    <li><a href="{% url 'add_to_wishlist' slug=blog.slug %}"><i class="fa fa-bookmark"></i></a></li>
                   </ul>
                     <p>{{blog.description|safe}}</p> 
                     
@@ -77,10 +77,10 @@
                         {% endif %}
                         <div class="col-6">
                           <!-- AddToAny BEGIN -->
-                        <!-- AddToAny BEGIN -->
-<a class="a2a_dd" href="https://www.addtoany.com/share"><img src="https://static.addtoany.com/buttons/share_save_171_16.png" width="171" height="16" border="0" alt="Share"></a>
-<script async src="https://static.addtoany.com/menu/page.js"></script>
-<!-- AddToAny END -->
+                                                <!-- AddToAny BEGIN -->
+                        <a class="a2a_dd" href="https://www.addtoany.com/share"><img src="https://static.addtoany.com/buttons/share_save_171_16.png" width="171" height="16" border="0" alt="Share"></a>
+                        <script async src="https://static.addtoany.com/menu/page.js"></script>
+                        <!-- AddToAny END -->
                         </div>
                           
                        
@@ -97,7 +97,7 @@
                   <div class="sidebar-heading">
                     <h2>{{blog.blog_comments.all.count}} Comments</h2>
                   </div>
-                  <div class="content">
+                  <div class="content" id="comment">
                     <ul class="d-flex flex-column">                       
                       {% for comment in blog.blog_comments.all %}
                       <li>

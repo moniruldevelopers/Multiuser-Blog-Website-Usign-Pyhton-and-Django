@@ -8,7 +8,7 @@
     <div class="owl-banner owl-carousel">
       {% for blog in most_liked|slice:"20" %}
         <div class="item blog-card">
-          <img  class="zoom-on-hover" style="height: 350px;" src="{{blog.banner.url}}" alt="{{blog.title}}">
+          <a href="{% url 'blog_details' blog.slug %}"><img  class="zoom-on-hover" style="height: 350px;" src="{{blog.banner.url}}" alt="{{blog.title}}"></a>
           <div class="item-content">
             <div class="main-content">
               <div class="meta-category category-badge">

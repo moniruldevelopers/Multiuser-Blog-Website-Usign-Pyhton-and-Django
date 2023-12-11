@@ -3,7 +3,7 @@
 <div class="col-lg-6">
   <div class="blog-card mb-3">
     <div class="blog-thumb thumbnail">
-      <img class="zoom-on-hover" style="height: 250px;" src="{{blog.banner.url}}" alt="{{blog.title}}">
+      <a href="{% url 'blog_details' blog.slug %}"><img class="zoom-on-hover" style="height: 250px;" src="{{blog.banner.url}}" alt="{{blog.title}}"></a>
     </div>
     <div class="down-content">
       <span class="category-badge">{{blog.category}}</span>

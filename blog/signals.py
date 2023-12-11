@@ -4,6 +4,8 @@ from .models import Blog
 from user_profile.models import Follow, User
 from notification.models import Notification
 
+
+
 @receiver(post_save, sender=Blog)
 def send_notification_to_followers_when_blog_created(instance,created,*args, **kwargs):
     if created:
@@ -41,3 +43,5 @@ def send_notification_when_someone_likes_blog(instance, pk_set, action, *args, *
             text=f"{user.username} liked your blog",
             notification_types="Like"
         )
+
+
