@@ -32,8 +32,10 @@
                     <li><a href="javascript:void(0);"><i class="fa fa-comment"></i> {{blog.blog_comments.all.count}} Comments</a></li>
                     <li><a href="{% url 'view_user_information' blog.user.username %}"><i class="fa fa-user"></i> {{blog.user.username}}</a></li>
                     <li><a href="javascript:void(0);"><i class="fa fa-calendar"></i> {{blog.created_date}}</a></li>
+                    <a href="{% url 'add_to_wishlist' slug=blog.slug %}"><i class="fa fa-bookmark"></i></a>
                   </ul>
-                    <p>{{blog.description|safe}}</p>                   
+                    <p>{{blog.description|safe}}</p> 
+                    
                     <div class="post-options">
                       <div class="row">
                         <div class="col-6">

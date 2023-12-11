@@ -21,6 +21,24 @@ from django.dispatch import receiver
 from django.db.models.signals import pre_delete,pre_save
 from django.dispatch import receiver
 
+# start wish list code 
+class Wishlist(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    blogs = models.ManyToManyField('Blog')
+
+    def add_to_wishlist(self, blog):
+        self.blogs.add(blog)
+
+    def remove_from_wishlist(self, blog):
+        self.blogs.remove(blog)
+
+    def __str__(self):
+        return self.user.username + "'s Wishlist"
+# end wish list code 
+
+
+
+
 
 # Create your models here.
 class Site(models.Model):

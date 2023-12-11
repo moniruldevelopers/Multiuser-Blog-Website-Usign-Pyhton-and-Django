@@ -11,6 +11,33 @@ from django.db.models import Q
 from django.contrib import messages
 from django.utils.text import slugify
 
+
+#wish list view
+@login_required(login_url='login')
+def add_to_wishlist(request, slug):
+    blog = get_object_or_404(Blog, slug=slug)
+    wishlist, created = Wishlist.objects.get_or_create(user=request.user)    
+    wishlist.blogs.add(blog)
+    messages.success(request, "You saved this blog in your account ")
+    return redirect('blog_details', slug=slug)
+
+@login_required(login_url='login')
+def wishlist_view(request):
+    wishlist, created = Wishlist.objects.get_or_create(user=request.user)        
+    return render(request, 'wishlist.html', {'wishlist': wishlist})
+
+
+@login_required(login_url='login')
+def remove_from_wishlist(request, slug):
+    blog = get_object_or_404(Blog, slug=slug)
+    wishlist = get_object_or_404(Wishlist, user=request.user)
+    wishlist.remove_from_wishlist(blog)   
+    messages.error(request, "Deleted Saved blogs") 
+    return redirect('wishlist')
+#wish list view 
+
+
+
 # Create your views here.
 def home(request):  
     blogs = Blog.objects.order_by('-created_date')

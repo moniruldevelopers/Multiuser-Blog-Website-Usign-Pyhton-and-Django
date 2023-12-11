@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}
+Saved Blog Page    
+{% endblock title %}
+    
+{% block content %}
+
+<style>
+    /* Add this style to your template or a linked CSS file */
+    .wishlist-columns {
+        column-count: 3;
+        column-gap: 20px; /* Adjust as needed */
+        margin-bottom: 20px; /* Add some margin between columns */
+    }
+
+    .wishlist-item {
+        break-inside: avoid-column; /* Prevent items from breaking across columns */
+        margin-bottom: 10px; /* Add some margin between items */
+    }
+</style>
+
+
+<div class="container py-5 text-align-center">
+    <div >
+        {% if messages %}
+        {% include 'message.html' %}
+         {% endif %}
+    </div>
+    <div style="text-align: center; padding-bottom: 15px;">
+    <h2>{{ user.username }}'s Wishlist</h2>
+    <p>Number of Saved blogs: {{ wishlist.blogs.count }}</p>
+    </div>
+
+    
+        
+    {% if wishlist %}
+    <div class="wishlist-columns">
+        {% for blog in wishlist.blogs.all %}
+            <div class="wishlist-item">
+                <ol type="1">
+                    <a href="{% url 'blog_details' slug=blog.slug %}">{{ blog.title }}</a> |
+                    <a href="{% url 'remove_from_wishlist' slug=blog.slug %}"><i class="fa fa-trash"></i></a>
+                </ol>
+            </div>
+        {% endfor %}
+    </div>
+    {% else %}
+        <p>No blogs in the wishlist.</p>
+    {% endif %}
+</div>
+{% endblock content %}
