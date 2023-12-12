@@ -239,6 +239,27 @@ class Ugv_Ad(models.Model):
     ad3_url = models.URLField(max_length=300, blank=True)
     ad3 = models.ImageField(upload_to="ad/", blank=True, null=True)
 
+    ad4_url = models.URLField(max_length=300, blank=True)
+    ad4 = models.ImageField(upload_to="ad/", blank=True, null=True)
+
+    ad5_url = models.URLField(max_length=300, blank=True)
+    ad5 = models.ImageField(upload_to="ad/", blank=True, null=True)
+
+    ad6_url = models.URLField(max_length=300, blank=True)
+    ad6 = models.ImageField(upload_to="ad/", blank=True, null=True)
+
+    ad7_url = models.URLField(max_length=300, blank=True)
+    ad7 = models.ImageField(upload_to="ad/", blank=True, null=True)
+
+    ad8_url = models.URLField(max_length=300, blank=True)
+    ad8 = models.ImageField(upload_to="ad/", blank=True, null=True)
+
+    ad9_url = models.URLField(max_length=300, blank=True)
+    ad9 = models.ImageField(upload_to="ad/", blank=True, null=True)
+
+    ad10_url = models.URLField(max_length=300, blank=True)
+    ad10 = models.ImageField(upload_to="ad/", blank=True, null=True)
+
     updated_date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
