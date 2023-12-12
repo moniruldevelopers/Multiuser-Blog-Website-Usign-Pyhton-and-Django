@@ -2,10 +2,9 @@
 <!-- Header -->
 <header class="">
     <nav class="navbar navbar-expand-lg">
-        <div class="container">
-            
-            {% for site in site %}
-            <a class="navbar-brand" href="{% url 'home'  %}"><img style="width: 250px; height: 75px;" src="{{site.header_logo.url}}" alt=""></a>
+        <div class="container">            
+            {% for site_instance in site %}
+            <a class="navbar-brand" href="{% url 'home'  %}"><img style="width: 250px; height: 75px;" src="{{site_instance.header_logo.url}}" alt=""></a>
             {% endfor %}                
        
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -13,23 +12,24 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
+            <li class="nav-item {% if request.path == '/' %}active{% endif %}">
                 <a class="nav-link" href="{% url 'home' %}">Home               
                 </a>
             </li>           
-            <li class="nav-item">
+            <li class="nav-item {% if request.path == '/blogs/' %}active{% endif %}">
                 <a class="nav-link" href="{% url 'blogs' %}">Blogs</a>
             </li>     
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown {% if '/about/' in request.path %}active {% elif '/contact/' in request.path %}active{% endif %} ">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Info
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">                  
-                    <a class="dropdown-item" href="{% url 'about' %}"> About Us </a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="{% url 'contact' %}">Contact Us </a>                                  
+                    <a class="dropdown-item {% if '/about/' in request.path %}active{% endif %}" href="{% url 'about' %}"> About Us </a>
+                   
+                    <a class="dropdown-item {% if '/contact/' in request.path %}active{% endif %}" href="{% url 'contact' %}">Contact Us </a> 
+                </div>                                 
             </li>     
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown {% if '/category_blogs/' in request.path %} active {% endif %}">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Category
                 </a>
@@ -39,10 +39,10 @@
                         {% if category == category_count.category %}
                             <a class="dropdown-item" href="{% url 'category_blogs' category.slug %}">
                                 <i class="fa fa-list fa-xs" style="color: #f5831f;"></i> {{ category.title }}
-                                <div class="dropdown-divider"></div>
+                           <div class="dropdown-divider"></div>
                             </a>
                                 
-                            {% endif %}
+                        {% endif %}
                         {% endfor %}
                     {% endfor %}
                                     
@@ -51,7 +51,7 @@
             <li>
                 
                 {% if request.user.is_authenticated %}
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown {% if '/profile/' in request.path %}active {% elif '/user_notifications/' in request.path %}active {% elif '/wishlist/' in request.path %}active {% endif %} ">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     
                       {% if request.user.username %}
@@ -59,8 +59,8 @@
                       {% endif %}                        
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <a class="dropdown-item" href="{% url 'profile' %}"><i class="fa fa-user"></i> My Profile</a>
-                      <a class="dropdown-item" href="{% url 'user_notifications' %}"> <i class="fa fa-bell"></i> 
+                      <a class="dropdown-item {% if '/profile/' in request.path %}active{% endif %}" href="{% url 'profile' %}"><i class="fa fa-user"></i> My Profile</a>
+                      <a class="dropdown-item {% if '/user_notifications/' in request.path %}active{% endif %} " href="{% url 'user_notifications' %}"><i class="fa fa-bell"></i> 
                         
                         {% if unseen > 0 %}
                         Notifaction ({{unseen}})
@@ -69,23 +69,23 @@
                         {% endif %}
                             
                         </a>
-                      <a class="dropdown-item" href="{% url 'wishlist' %}"><i class="fa fa-bookmark"></i> Saved Blog</a>
+                      <a class="dropdown-item {% if '/wishlist/' in request.path %}active{% endif %}" href="{% url 'wishlist' %}"><i class="fa fa-bookmark"></i> Saved Blog</a>
                       <a class="dropdown-item" href="{% url 'logout' %}"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
                     </div>
                 </li>
                 {% else %}
-                <li class="nav-item">
+                <li class="nav-item 
+                {% if request.path == '/login/' %}active{% endif %}">
                     <a class="nav-link" href="{% url 'login' %}">LOGIN</a>
                 </li>
                 {% endif %}
                     
             </li>     
-            </ul>        
+            </ul> 
             <form class="form-inline d-flex flex-nowrap my-2 ml-auto search_form" action="{% url 'search_blogs' %}" method="GET" >
                 <input class="form-control px-5" name="search" type="text" placeholder="Search blogs/author/category/tags "  required>
                 <button class="btn btn-primary ml-1"><i class="fa fa-search"></i> Search</button>
-            </form>
-           
+            </form>           
         </div>
         </div>
     </nav>

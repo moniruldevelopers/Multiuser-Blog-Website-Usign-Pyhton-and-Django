@@ -347,3 +347,7 @@ input, textarea{
   text-decoration: underline;
 }
 
+.dropdown-item.active, .dropdown-item:active {
+  background-color: #F5831F;
+}
+
