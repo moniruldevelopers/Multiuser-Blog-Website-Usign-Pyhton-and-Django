@@ -261,72 +261,6 @@ input, textarea{
     color: #1F1844;
   }
   
-  .team-member {
-    position: relative;
-    overflow: hidden;
-    border: 1px solid #ddd;
-    margin: 10px;
-    border-radius: 10px;
-    transition: box-shadow 0.3s;
-}
-
-.team-member img {
-    width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 10px;
-}
-
-.team-member:hover {
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
-.member-info {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
- 
-    background: rgba(0, 0, 0, 0.7);
-    color: #fff;
-    text-align: center;
-    padding: 20px;
-    opacity: 0;
-    transition: opacity 0.3s;
-   
-}
-
-.team-member:hover .member-info {
-    opacity: 1;
-}
-
-.social-icons i {
-    font-size: 24px;
-    margin: 0 5px;
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.social-icons i:hover {
-    transform: scale(1.2);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-}
-
-.member-info h4,
-.member-info p {
-    margin-bottom: 0;
-}
-
-.member-info h4 {
-    font-size: 18px;
-    margin-top: 10px;
-}
-
-.member-info p {
-    font-size: 16px;
-}
-
-
 .notification-item {
   border: 1px solid #dee2e6;
   border-radius: 8px;
@@ -351,3 +285,76 @@ input, textarea{
   background-color: #F5831F;
 }
 
+
+.dropdown-menu { 
+  padding: .0rem 0 !important;
+
+}
+.dropdown-divider {
+  margin: 0.0rem 0 !important;
+
+}
+
+
+/* about css */     
+
+.custom-shadow {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.team-member-card {
+    border-radius: 10px; /* Adjust the border radius for the card */
+}
+
+.card-body {
+    position: relative;
+    z-index: 2;
+    padding: 0.25rem !important;
+}
+
+
+.card-title {
+    line-height: 1.2;
+    margin-bottom: 5px;
+}
+
+.card-text {
+    line-height: 1.2;
+    margin-bottom: 10px;
+}
+
+.social-icons {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+}
+
+.social-icons a {
+    color: #fff;
+    padding: 21px;
+    margin: 0 5px;
+    transition:0.3s ease;
+    text-decoration: none;
+}
+
+
+
+.card-body:hover .social-icons {
+    opacity: 1;
+}
+
+.team-member-card:hover .custom-shadow {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* about css */

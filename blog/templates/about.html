@@ -40,28 +40,33 @@
     <h2 class="sidebar-heading seven ">Meet Our Team</h2>    
         <p style="text-align: justify;">Welcome to the heart of creativity and dedication at the University of Global Village, Barishal! Our team is a diverse group of passionate individuals who come together to bring you engaging and insightful content on our blog. Each member brings a unique set of skills, experiences, and perspectives, making our team a dynamic force in the digital landscape.</p>        
           
-    <div class="row mx-auto" style="margin-top: 20px;">    
+
         
-          {% for team in teams %}
-            
-        
-               
-        <div class="col-md-6 col-lg-3">
-            <div class="team-member team-member-1">
-                <img style="width: 100%; height: 250px;" src="{{team.image.url}}" alt="{{team.name}}">
-                <div class="member-info">
-                    <div class="social-icons">
-                        <a  target="_blank" href="{{team.fb_url}}"><i class="fa fa-facebook"></i></a>
+        <div class="container mt-5">
+            <div class="row">
+                {% for team in teams %}
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="card team-member-card custom-shadow">
+                            <img class="card-img-top" style="width: auto; height:315px;" src="{{ team.image.url }}" alt="{{ team.name }}">
+                            <div class="card-body">
+                                <h5 class="card-title text-center">{{ team.name }}</h5>
+                                <p class="card-text text-center">{{ team.designation }}</p>
+                                <div class="social-icons">
+                                    <a href="{{ team.fb_url }}" target="_blank"><i class="fa fa-facebook"></i></a>
+                                    <!-- Include only the Facebook social icon -->
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div style="text-align: center;">
-                    <h4>{{team.name}}</h4>
-                    <p>{{team.designation}}</p>
-                </div>
+                {% endfor %}
             </div>
-        </div> 
-        {% endfor %}
-    </div>
+        </div>
+         
+      
+       
+        
+
+        
 </div>
 
 {% endblock content %}
