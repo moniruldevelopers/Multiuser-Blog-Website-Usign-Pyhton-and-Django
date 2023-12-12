@@ -39,8 +39,9 @@
                         {% if category == category_count.category %}
                             <a class="dropdown-item" href="{% url 'category_blogs' category.slug %}">
                                 <i class="fa fa-list fa-xs" style="color: #f5831f;"></i> {{ category.title }}
-                            </a>
                                 <div class="dropdown-divider"></div>
+                            </a>
+                                
                             {% endif %}
                         {% endfor %}
                     {% endfor %}

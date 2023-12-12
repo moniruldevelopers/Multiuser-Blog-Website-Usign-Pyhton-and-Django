@@ -49,7 +49,7 @@ def login_user(request):
                 login(request, user)
                 return redirect('home')            
             else:
-                messages.warning(request, "Worng Credentials")
+                messages.error(request, "Worng Credentials")
     context ={
         "form":form
     }
