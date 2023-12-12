@@ -89,9 +89,8 @@ def blogs(request):
 
 def category_blogs(request, slug):
     category = get_object_or_404(Category, slug = slug)
-    queryset = category.category_blogs.all()
-    populars = Blog.objects.order_by('-views')[:15]    
-
+    queryset = category.category_blogs.all().order_by('-created_date')  # Order by creation date in descending order
+    populars = Blog.objects.order_by('-views')[:15] 
     page = request.GET.get('page', 1)
     paginator = Paginator(queryset,15)
 
@@ -119,7 +118,7 @@ def category_blogs(request, slug):
 
 def tag_blogs(request, slug):
     tag = get_object_or_404(Tag, slug = slug)
-    queryset = tag.tag_blogs.all()
+    queryset = tag.tag_blogs.all().order_by('-created_date')
     populars = Blog.objects.order_by('-views')[:15]    
 
 
@@ -236,8 +235,11 @@ def search_blogs(request):
             Q(tags__title__icontains=search_key)
         ).distinct()
         #Paginate the blogs
+        blogs = blogs.order_by('-created_date')#new added 
         page = request.GET.get('page', 1)
-        paginator = Paginator(blogs, 50)  # Show 10 blogs per page
+        paginator = Paginator(blogs, 50)
+        #   # Show 10 blogs per page
+      
         try:
             blogs = paginator.page(page)
         except PageNotAnInteger:
