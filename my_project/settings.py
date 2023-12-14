@@ -1,5 +1,10 @@
 from pathlib import Path
+
 import os
+
+from allauth import __path__ as allauth_path
+os.path.join(allauth_path[0], 'templates', 'account')
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -37,11 +42,20 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap5', 
 
+    #email varification
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',   
+    # 'crispy_forms',
+
 ]
+SITE_ID = 1
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
+# CRISPY_TEMPLATE_PACK = 'bootstrap4'
 CKEDITOR_UPLOAD_PATH = 'media/'
+
 
 
 MIDDLEWARE = [
@@ -52,6 +66,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    #password reset
+    'allauth.account.middleware.AccountMiddleware',
  
 ]
 
@@ -60,7 +76,7 @@ ROOT_URLCONF = 'my_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR, 'templates'],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -134,12 +150,28 @@ STATICFILES_DIRS = [
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
+#password reset
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'monirulislam4103@gmail.com'
+EMAIL_HOST_PASSWORD = 'tpml wrtf ikpz tgya'  
+
+# Authentication
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'  # Set email verification to mandatory
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+ACCOUNT_EMAIL_CONFIRMATION_HTML = 'confirm-email.html'
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
+
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'user_profile.User'
 AUTHENTICATION_BACKENDS = (
     "user_profile.backends.EmailAuthenticationBackend",
     "django.contrib.auth.backends.ModelBackend"
+    
 )
+

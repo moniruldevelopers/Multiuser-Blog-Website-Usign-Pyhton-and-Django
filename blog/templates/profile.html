@@ -108,9 +108,7 @@
 
                     </div>
                     <div class="form-group">
-                        <label for="email">Email:</label>
-                        <input class="form-control" name="email" type="email" value="{{account.email}}">
-                        <p class="py-1 text-danger errors">{{form.email.errors}}</p>
+                        <label for="email">Email: {{account.email}} (email address is unchangeable)</label>                        
                     </div>
                     <div class="form-group">
                         <label for="new_password">New Password:</label>
@@ -133,5 +131,8 @@
     </div>
 </div>
 
+
+<!-- <label class="form-control" name="email" type="email" value="{{account.email}}" disabled>
+<p class="py-1 text-danger errors">{{form.email.errors}}</p> -->
 {% endblock content %}
   

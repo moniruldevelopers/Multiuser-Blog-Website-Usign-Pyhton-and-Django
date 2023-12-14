@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect,get_object_or_404
+from django.shortcuts import render, redirect,get_object_or_404 ,redirect
 from django.http import HttpResponse
 from django.contrib import messages
 from .forms import UserRegistrationForm, LoginForm, UserProfileUpdateForm, ProfilePictureUpdateForm
@@ -12,26 +12,35 @@ from notification.models import Notification
 
 from django.core.paginator import PageNotAnInteger, EmptyPage, Paginator
 
-# Create your views here.
+# email varificcation here.
+from allauth.account.forms import SignupForm
+# from .forms import SignupForm
+# email varificcation here.
+
 
 
 @never_cache
 @not_logged_in_required
 def register_user(request):
-    form = UserRegistrationForm()
     if request.method == "POST":
-        form = UserRegistrationForm(request.POST)
+        form = SignupForm(request.POST)
         if form.is_valid():
-            user = form.save(commit=False)
-            user.set_password(form.cleaned_data.get('password'))
-            user.save()
-            messages.success(request, "Registration Successful")
-            return redirect('login')        
+            user = form.save(request)
+            messages.success(request, "Registration Successful. Please check your email to verify your account.")
+            return redirect('login')
+        else:
+            # Form is not valid, so it has errors. Render the registration page with the form and errors.
+            context = {
+                "form": form
+            }
+            return render(request, 'registration.html', context)
+    else:
+        form = SignupForm()
 
     context = {
         "form": form
     }
-    return render(request, 'registration.html',context)
+    return render(request, 'registration.html', context)
 
 
 @never_cache
@@ -47,7 +56,7 @@ def login_user(request):
             )
             if user:
                 login(request, user)
-                return redirect('home')            
+                return redirect('profile')            
             else:
                 messages.error(request, "Worng Credentials")
     context ={

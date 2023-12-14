@@ -1,0 +1,30 @@
+{% extends 'base.html' %} 
+{% load static %} 
+{% block title %}
+Email Varification Link sent your email
+{% endblock title %} 
+ {% block content %}
+
+<div class="container">
+  <div class="row justify-content-center"> 
+    <div class="col-md-6">
+      <div class="card mt-5">
+        <div class="card-body">
+          <h2 class="card-title">Need Email Varification</h2>
+          <p class="card-text">
+            We have
+            <span style="background-color: red; color: white"
+              >sent you an email varification link
+            </span>
+            In your email with instructions...
+            <span style="background-color: yellow; color: black;"> <br>If you don't receive the email within a few minutes, check your
+              spam folder.
+            </span> <span style="background-color: red; color: white" >Without verification, you can log in but after a few days, your account will automatically deleted !!</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
