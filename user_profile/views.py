@@ -88,27 +88,44 @@ def get_greeting():
     else:
         return "Good Night"
 
+
+
+
 @login_required(login_url='login')
 def profile(request):
-    
     greeting = get_greeting()
-
-
     account = get_object_or_404(User, pk=request.user.pk)
-    form = UserProfileUpdateForm(instance=account)
 
     if request.method == "POST":
         if request.user.pk != account.pk:
             return redirect('home')
-        
+
         form = UserProfileUpdateForm(request.POST, instance=account)
-        
+
+        # Manually handle the update of username and email
+        form.fields['username'].disabled = True
+        form.fields['email'].disabled = True
+
         if form.is_valid():
-            form.save()
+            # Do not save username and email from the form
+            account.first_name = form.cleaned_data['first_name']
+            account.last_name = form.cleaned_data['last_name']
+            new_password = form.cleaned_data.get('new_password')
+            if new_password:
+                account.set_password(new_password)
+
+            account.save()
+
             messages.success(request, "Profile has been updated successfully")
             return redirect('profile')
         else:
             print(form.errors)
+    else:
+        # Create form with initial values
+        form = UserProfileUpdateForm(instance=account)
+        # Disable username and email fields
+        form.fields['username'].disabled = True
+        form.fields['email'].disabled = True
 
     context = {
         "account": account,
@@ -117,6 +134,7 @@ def profile(request):
     }
 
     return render(request, 'profile.html', context)
+
 
 @login_required
 def change_profile_picture(request):
