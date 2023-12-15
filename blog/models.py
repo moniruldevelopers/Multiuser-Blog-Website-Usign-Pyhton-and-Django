@@ -357,3 +357,10 @@ class BlogReport(models.Model):
         blog_url = reverse('blog_details', kwargs={'slug': self.blog.slug})
         self.reason = f"{self.reason}\n\nBlog Details: {blog_url}"
         super().save(*args, **kwargs)
+
+#for user restricted 
+class RestrictedEmail(models.Model):
+    email = models.EmailField(unique=True)
+
+    def __str__(self):
+        return self.email

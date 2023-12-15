@@ -68,6 +68,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     #password reset
     'allauth.account.middleware.AccountMiddleware',
+
+    #restrict email
+    'blog.middleware.RestrictEmailMiddleware',
  
 ]
 

@@ -1,6 +1,9 @@
 from django.contrib import admin
 from .models import *
 # Register your models here.
+admin.site.register(RestrictedEmail)
+
+
 class BlogAdmin(admin.ModelAdmin):
     list_display = ['title', 'user']
     search_fields = ['title','user__email','user__username']
