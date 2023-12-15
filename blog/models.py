@@ -172,7 +172,39 @@ class Blog(models.Model):
         else:
             self.slug = generate_unique_slug(self, self.title)
             super().save(*args, **kwargs)
+    #for trash
+    def delete(self, *args, **kwargs):
+        # Move the blog to the trash
+        BlogTrash.objects.create(
+            user=self.user,
+            title=self.title,
+            banner=self.banner,
+            description=self.description
+        )
+        super().delete(*args, **kwargs)
 
+
+class BlogTrash(models.Model):
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    title = models.CharField(max_length=255)
+    banner = models.ImageField(upload_to='blog_banners/', null=True, blank=True)
+    description = models.TextField()
+    deleted_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+    
+    def restore(self):
+        # Perform the restore action based on your application's logic
+        # For example, you might set 'is_deleted' to False or move the blog back to the original model
+        # Update the restore logic according to your actual model structure
+        Blog.objects.create(
+            user=self.user,
+            title=self.title,
+            banner=self.banner,
+            description=self.description
+        )
+        self.delete()  # Delete the restored blog from the trash
 
 
 @receiver(pre_delete, sender=Blog)

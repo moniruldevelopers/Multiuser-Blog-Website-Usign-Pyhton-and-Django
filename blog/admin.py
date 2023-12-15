@@ -4,6 +4,7 @@ from .models import *
 class BlogAdmin(admin.ModelAdmin):
     list_display = ['title', 'user']
     search_fields = ['title','user__email','user__username']
+    list_per_page = 100
 admin.site.register(Blog,BlogAdmin)
 
 
@@ -25,3 +26,11 @@ admin.site.register(Wishlist)
 class BlogReportAdmin(admin.ModelAdmin):
     list_display = ['reason','blog','user', 'status']
 admin.site.register(BlogReport,BlogReportAdmin)
+
+
+#trash
+@admin.register(BlogTrash)
+class BlogTrashAdmin(admin.ModelAdmin):
+    list_display = ['title', 'user', 'deleted_at']
+    search_fields = ['title', 'user__username']
+    date_hierarchy = 'deleted_at'

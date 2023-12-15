@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+  Deleted blogs list
+{% endblock title %}
+
+
+{% block content %}
+<div class="container">
+<h2 class="py-2">Deleted Blogs <i class="fa fa-trash"></i></h2>
+
+{% if deleted_blogs %}
+
+    <ol>
+        {% for blog in deleted_blogs %}
+            <li>
+                <strong>{{ blog.title }}</strong> - Deleted on {{ blog.deleted_at|date:"F j, Y, g:i a" }}
+            </li>
+        {% endfor %}
+    </ol>
+{% else %}
+    <p>No deleted blogs found.</p>
+{% endif %}
+</div>
+{% endblock content %}
+  

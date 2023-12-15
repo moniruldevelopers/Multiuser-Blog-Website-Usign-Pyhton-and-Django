@@ -19,16 +19,16 @@
         {% for blog in blogs %}      
         <div class="col-md-3 my-2">
           <div class="card">
-            <img style="width: 100%; height: 250px;" class="card-img-top img-fluid" src="{{blog.banner.url}}" alt="Card image cap">
+            <a href="{% url 'blog_details' blog.slug %}"><img style="width: 100%; height: 250px;" class="card-img-top img-fluid" src="{{blog.banner.url}}" alt="Card image cap"></a>
             <div class="card-body">
               <p class="card-text d-flex flex-row">
                 {{blog.title|truncatechars:15}}
                 <a class="px-2 ml-auto" href="{% url 'update_blog' blog.slug %}">
                   <i class="fa fa-edit"></i>
-                </a>
-                <a class="px-2" href="?delete={{blog.pk}}">
+                </a>               
+                <a class="px-2" href="?delete={{blog.pk}}" onclick="return confirmDelete('{{ blog.title }}');">
                   <i class="fa fa-trash text-danger"></i>
-                </a>
+                </a>            
               </p>
             </div>
           </div>
@@ -48,6 +48,19 @@
     </div>
   </div>
 </div>
+<script>
+  function confirmDelete(blogTitle) {
+      var confirmation = confirm("Are you sure you want to delete this blog?\n" + blogTitle);
+  
+      // If the user clicks 'OK' (true), proceed with the deletion
+      if (confirmation) {
+          return true;
+      }
+  
+      // If the user clicks 'Cancel' (false), prevent the default action (deletion)
+      return false;
+  }
+  </script>
 
 {% endblock content %}
   

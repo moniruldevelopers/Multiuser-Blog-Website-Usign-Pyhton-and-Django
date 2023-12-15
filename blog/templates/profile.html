@@ -121,9 +121,24 @@
                     </div>
                 
                     <div class="form-group mt-2">
-                        <button class="btn btn-primary"><i class="fa fa-upload"></i> Update</button>
+                        <button class="btn btn-primary" onclick="return confirmUpdate()"><i class="fa fa-upload"></i> Update</button>
                     </div>
                 </form>
+                <script>
+                    function confirmUpdate() {
+                        // Show a confirmation dialog
+                        var confirmation = confirm("Are you sure you want to update?");
+                
+                        // If the user clicks 'OK' (true), proceed with the form submission
+                        if (confirmation) {
+                            // Assuming your form has an ID, replace 'your-form-id' with the actual ID
+                            document.getElementById('your-form-id').submit();
+                        }
+                
+                        // If the user clicks 'Cancel' (false), prevent the default form submission
+                        return confirmation;
+                    }
+                </script>
                 
             </div>
 

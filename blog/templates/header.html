@@ -69,7 +69,8 @@
                         {% endif %}
                             
                         </a>
-                      <a class="dropdown-item {% if '/wishlist/' in request.path %}active{% endif %}" href="{% url 'wishlist' %}"><i class="fa fa-bookmark"></i> Saved Blog</a>
+                      <a class="dropdown-item {% if '/wishlist/' in request.path %}active{% endif %}" href="{% url 'wishlist' %}"><i class="fa fa-bookmark"></i> Saved Blogs</a>
+                      <a class="dropdown-item {% if '/deleted_blogs/' in request.path %}active{% endif %}" href="{% url 'deleted_blogs' %}"><i class="fa fa-trash"></i> Deleted Blogs</a>
                       <a class="dropdown-item" href="{% url 'logout' %}"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
                     </div>
                 </li>

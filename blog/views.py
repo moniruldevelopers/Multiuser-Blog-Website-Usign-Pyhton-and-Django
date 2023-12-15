@@ -441,4 +441,13 @@ def report_blog(request, slug):
 
 
 
+#for delete  blog view  
+@login_required
+def deleted_blogs(request):
+    # Fetch deleted blogs for the current user
+    deleted_blogs = BlogTrash.objects.filter(user=request.user).order_by('-deleted_at')
+    return render(request, 'deleted_blogs.html', {'deleted_blogs': deleted_blogs})
+
+
+
 

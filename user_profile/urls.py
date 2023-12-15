@@ -11,5 +11,4 @@ urlpatterns = [
     path('user_notifications/',user_notifications, name='user_notifications'),
     path('mute_or_unmute_user/<int:user_id>/', mute_or_unmute_user, name='mute_or_unmute_user'),
 
-
 ]

@@ -21,7 +21,7 @@ path('wishlist/', wishlist_view, name='wishlist'),
 path('remove_from_wishlist/<slug:slug>/', remove_from_wishlist, name='remove_from_wishlist'),
 #reprot blog 
 path('blog/report/<slug:slug>/', report_blog, name='report_blog'),
-
+path('deleted_blogs/', deleted_blogs, name='deleted_blogs'),
 
 
 ]
