@@ -76,7 +76,8 @@
                         </div>
                         {% endif %}
                         <div class="col-6">
-                    <button id="copyLinkBtn" class="btn btn-primary" style="text-transform: capitalize; padding: 1px 4px; border-radius: 5px; font-size: x-small;">Share Post</button>
+                    <button id="copyLinkBtn" class="btn btn-primary" style="text-transform: capitalize; padding: 1px 4px; border-radius: 5px; font-size: x-small;"><i class="fa fa-clipboard"></i> Share Post</button>
+                    <a class="btn btn-primary" style="text-transform: capitalize; padding: 1px 4px; border-radius: 5px; font-size: x-small;" href="{% url 'report_blog' slug=blog.slug %}">Report this blog</a>
                     <script>
                       document.getElementById("copyLinkBtn").addEventListener("click", function() {
                           copyToClipboard(window.location.href);
@@ -96,8 +97,13 @@
                                                 <!-- AddToAny BEGIN -->
                         <a class="a2a_dd" href="https://www.addtoany.com/share"><img src="https://static.addtoany.com/buttons/share_save_171_16.png" width="171" height="16" border="0" alt="Share"></a>
                         <script async src="https://static.addtoany.com/menu/page.js"></script>
-                        <!-- AddToAny END -->
-                        </div>
+                     
+                        
+                      </div>
+                        <!-- blog_detail.html -->
+                        
+
+
                           
                        
                       </div>

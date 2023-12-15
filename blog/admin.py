@@ -20,3 +20,8 @@ admin.site.register(Ugv_Ad)
 admin.site.register(OurTeam)
 admin.site.register(Contact)
 admin.site.register(Wishlist)
+
+#report blog
+class BlogReportAdmin(admin.ModelAdmin):
+    list_display = ['reason','blog','user', 'status']
+admin.site.register(BlogReport,BlogReportAdmin)

@@ -5,11 +5,13 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.core.paginator import PageNotAnInteger, EmptyPage, Paginator
 from .models import *
-from .forms import TextForm, AddBlogForm ,ContactForm
+from .forms import TextForm, AddBlogForm ,ContactForm, ReportForm
 from django.core import paginator
 from django.db.models import Q
 from django.contrib import messages
 from django.utils.text import slugify
+
+
 
 def share_page(request):
     # Your logic to retrieve data or context for the page goes here
@@ -418,6 +420,24 @@ def contact(request):
 
 
 
+#blog report 
+@login_required(login_url='login')
+def report_blog(request, slug):
+    blog = get_object_or_404(Blog, slug=slug)
+
+    if request.method == 'POST':
+        form = ReportForm(request.POST)
+        if form.is_valid():
+            report = form.save(commit=False)
+            report.blog = blog
+            report.user = request.user
+            report.save()
+            messages.success(request, "Report submitted successfully, We will review it asp !")
+            return redirect('report_blog', slug=blog.slug)
+    else:
+        form = ReportForm()
+
+    return render(request, 'report_blog.html', {'form': form, 'blog': blog})
 
 
 

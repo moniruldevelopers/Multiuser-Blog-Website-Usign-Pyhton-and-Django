@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block title %}
+  Report Blog page
+{% endblock title %}
+
+
+{% block content %}
+<div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+    
+    {% if messages %}
+        {% include 'message.html' %}
+    {% endif %}
+        
+    <h2 class="mb-3" style="font-size: medium;" >Report Blog Title : <a href="{% url 'blog_details' slug=blog.slug %}">{{ blog.title }}</a></h2>
+
+    <form method="POST" action="{% url 'report_blog' slug=blog.slug %}" >
+        {% csrf_token %} 
+        {{form|crispy}}    
+        {% if form.reason.errors %}
+            <p style="color: red;">{{ form.reason.errors.0 }}</p>
+        {% endif %}
+    
+        <button type="submit" style="margin-top: 10px;" class="btn btn-primary"><i class="fa fa-paper-plane"></i> Submit Report</button>
+    </form>
+    
+
+    
+    <button class="btn btn-primary mt-3" >
+        <a style="color:white" href="{% url 'blog_details' blog.slug %}"><i class="fa fa-backward"></i> Back to Blog</a>
+    </button>
+</div>
+{% endblock content %}
+  

@@ -1,6 +1,11 @@
 from django import forms
 from ckeditor.fields import RichTextField
-from .models import Blog, Contact
+from .models import Blog, Contact, BlogReport
+
+#FOR REPORT POST 
+
+
+
 class ContactForm(forms.ModelForm):
     class Meta:
         model = Contact
@@ -26,3 +31,14 @@ class AddBlogForm(forms.ModelForm):
             "description",
            
         )
+
+
+#for report blog 
+class ReportForm(forms.ModelForm):
+    class Meta:
+        model = BlogReport
+        fields = ['reason', 'status']
+        widgets = {
+            'status': forms.HiddenInput(), 
+        }
+  

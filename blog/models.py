@@ -1,3 +1,4 @@
+from django.shortcuts import reverse
 from django.db import models
 from django.utils.text import slugify
 from user_profile.models import User
@@ -297,3 +298,30 @@ class Contact(models.Model):
         return self.name
 
 
+
+
+
+#for report blog 
+class BlogReport(models.Model):
+    PENDING = 'pending'
+    REVIEWED = 'reviewed'
+    RESOLVED = 'resolved'
+
+    STATUS_CHOICES = [
+        (PENDING, 'Pending'),
+        (REVIEWED, 'Reviewed'),
+        (RESOLVED, 'Resolved'),
+    ]
+
+    blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    reason = models.TextField()
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default=PENDING) 
+
+    def __str__(self):
+        return self.reason
+    def save(self, *args, **kwargs):
+        # Append the blog details URL to the original reason
+        blog_url = reverse('blog_details', kwargs={'slug': self.blog.slug})
+        self.reason = f"{self.reason}\n\nBlog Details: {blog_url}"
+        super().save(*args, **kwargs)
