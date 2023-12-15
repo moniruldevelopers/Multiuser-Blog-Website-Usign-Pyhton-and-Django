@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',   
-    # 'crispy_forms',
+
 
 ]
 SITE_ID = 1
@@ -150,6 +150,9 @@ STATICFILES_DIRS = [
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+#for email notification
+BASE_URL = 'http://localhost:8000/'
+ADMIN_EMAIL_ADDRESS = 'monirulislam4103@gmail.com'
 #password reset
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
