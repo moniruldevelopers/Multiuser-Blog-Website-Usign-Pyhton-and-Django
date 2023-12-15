@@ -11,6 +11,14 @@ from django.db.models import Q
 from django.contrib import messages
 from django.utils.text import slugify
 
+def share_page(request):
+    # Your logic to retrieve data or context for the page goes here
+    context = {
+        'page_data': 'Your page data goes here',
+    }
+    return render(request, 'share_page.html', context)
+
+
 
 #wish list view
 @login_required(login_url='login')
