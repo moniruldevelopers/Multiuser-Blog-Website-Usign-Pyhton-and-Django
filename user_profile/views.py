@@ -51,20 +51,23 @@ def login_user(request):
         form = LoginForm(request.POST)
         if form.is_valid():
             user = authenticate(
-                username = form.cleaned_data.get('username'),
-                password = form.cleaned_data.get('password'),
+                username=form.cleaned_data.get('username'),
+                password=form.cleaned_data.get('password'),
             )
             if user:
                 login(request, user)
-                return redirect('profile')            
+                if user.is_superuser:
+                    # Redirect superuser to admin panel dashboard
+                    return redirect('admin:index')
+                else:
+                    return redirect('profile')
             else:
-                messages.error(request, "Worng Credentials")
-    context ={
-        "form":form
+                messages.error(request, "Wrong Credentials")
+
+    context = {
+        "form": form
     }
-    return render(request, 'login.html',context)
-
-
+    return render(request, 'login.html', context)
 
 
 
