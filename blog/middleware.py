@@ -14,7 +14,7 @@ class RestrictEmailMiddleware:
             # Check if the user's email is in the list of restricted emails from the database
             if RestrictedEmail.objects.filter(email=user_email).exists():
                 # Take appropriate action, e.g., deny access or redirect
-                return HttpResponseForbidden("Access Forbidden")
+                return HttpResponseForbidden("Access Forbidden ")
 
         response = self.get_response(request)
         return response

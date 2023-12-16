@@ -76,6 +76,7 @@
                   </div>
                   <form class="px-5" action="{% url 'profile' %}" method="POST">
                     {% csrf_token %}
+                    
                     {% if messages %}
                         <div class="form-group">
                             {% include 'message.html' %}
@@ -84,46 +85,51 @@
                 
                     {% if form.non_field_errors %}
                         {% for error in form.non_field_errors %}
-                            <div class="alert ">
-                                <p class="text-danger ">{{error}}</p>
+                            <div class="alert">
+                                <p class="text-danger">{{error}}</p>
                             </div>
                         {% endfor %}
                     {% endif %}
                 
                     <div class="form-group">
-                        <label for="firstname">First Name:</label>
-                        <input class="form-control" name="first_name" type="text" value="{{account.first_name}}">
+                        <label for="first_name">First Name:</label>
+                        <input id="first_name" class="form-control" name="first_name" type="text" value="{{account.first_name}}" autocomplete="nope">
                         <p class="py-1 text-danger errors">{{form.first_name.errors}}</p>
                     </div>
+                
                     <div class="form-group">
-                        <label for="lastname">Last Name:</label>
-                        <input class="form-control" name="last_name" type="text" value="{{account.last_name}}">
+                        <label for="last_name">Last Name:</label>
+                        <input id="last_name" class="form-control" name="last_name" type="text" value="{{account.last_name}}">
                         <p class="py-1 text-danger errors">{{form.last_name.errors}}</p>
                     </div>
+                
                     <div class="form-group">
                         <label for="username">User Name: (unchangeable)</label>
-                        <input class="form-control" name="username" type="text" value="{{account.username}}" readonly>
+                        <input id="username" class="form-control" name="username" type="text" value="{{account.username}}" autocomplete="nope" readonly>
                         <p class="py-1 text-danger errors">{{form.username.errors}}</p>
                     </div>
+                
                     <div class="form-group">
                         <label for="email">Email: (unchangeable)</label>
-                        <input class="form-control" name="email" type="email" value="{{account.email}}" readonly>
+                        <input id="email" class="form-control" name="email" type="email" value="{{account.email}}" autocomplete="nope" readonly>
                         <p class="py-1 text-danger errors">{{form.email.errors}}</p>
                     </div>
+                
                     <div class="form-group">
                         <label for="new_password">New Password:</label>
-                        <input class="form-control" name="new_password" type="password" value="" autocomplete="new-password">
+                        <input id="new_password" class="form-control" name="new_password" type="password" value="" autocomplete="new-password">
                     </div>
                 
                     <div class="form-group">
                         <label for="confirm_password">Confirm Password:</label>
-                        <input class="form-control" name="confirm_password" type="password" value="">
+                        <input id="confirm_password" class="form-control" name="confirm_password" type="password" value="">
                     </div>
                 
                     <div class="form-group mt-2">
                         <button class="btn btn-primary" onclick="return confirmUpdate()"><i class="fa fa-upload"></i> Update</button>
                     </div>
                 </form>
+                
                 <script>
                     function confirmUpdate() {
                         // Show a confirmation dialog
