@@ -12,6 +12,7 @@ from notification.models import Notification
 
 from django.core.paginator import PageNotAnInteger, EmptyPage, Paginator
 
+
 # email varificcation here.
 from allauth.account.forms import SignupForm
 # from .forms import SignupForm
@@ -95,7 +96,7 @@ def get_greeting():
 
 
 @login_required(login_url='login')
-def profile(request):
+def profile(request):   
     greeting = get_greeting()
     account = get_object_or_404(User, pk=request.user.pk)
 
@@ -133,7 +134,7 @@ def profile(request):
     context = {
         "account": account,
         "form": form,
-        "greeting": greeting,
+        "greeting": greeting,       
     }
 
     return render(request, 'profile.html', context)
@@ -242,5 +243,9 @@ def mute_or_unmute_user(request, user_id):
         instance.muted = True
         instance.save()
     return redirect('view_user_information', username=user.username)
+
+
+
+
 
 

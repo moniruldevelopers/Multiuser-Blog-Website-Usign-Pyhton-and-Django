@@ -45,7 +45,10 @@ INSTALLED_APPS = [
     #email varification
     'allauth',
     'allauth.account',
-    'allauth.socialaccount',   
+    'allauth.socialaccount',  
+  
+    #for chart js
+    'chartjs',
 
 
 ]

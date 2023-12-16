@@ -1,0 +1,52 @@
+<!-- templates/chart.html -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <h2 style="text-align: center; padding: 20px 0px;">Here your own blog monthly user views history <i class="fa fa-history"></i></h2>
+    <canvas style="overflow-x: scroll; " id="columnChart" width="400" height="200" data-chart-url="{% url 'user_blog_views_chart' %}"></canvas>
+
+    <!-- Replace the local Chart.js script with the CDN link -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        var chartCanvas = document.getElementById('columnChart');
+        var chartUrl = chartCanvas.getAttribute('data-chart-url');
+
+        fetch(chartUrl)
+            .then(response => response.json())
+            .then(data => {
+                var ctx = chartCanvas.getContext('2d');
+                new Chart(ctx, {
+                    type: 'bar',  // Use 'bar' for a column chart
+                    data: {
+                        labels: data.labels,
+                        datasets: [{
+                            label: 'Monthly Views',
+                            data: data.data,
+                            backgroundColor: '#F5831F',  // Custom color for columns
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: 'top'
+                            }
+                        },
+                        indexAxis: 'x',  // Use 'x' for horizontal bar chart
+                        barThickness: 10  // Set the width of the columns
+                    }
+                });
+            });
+    </script>
+</div>
+{% endblock %}

@@ -24,6 +24,9 @@ path('blog/report/<slug:slug>/', report_blog, name='report_blog'),
 path('deleted_blogs/', deleted_blogs, name='deleted_blogs'),
 
 
+#for chart
+path('user_blog_views_chart/', user_blog_views_chart, name='user_blog_views_chart'),
+path('line_chart/', line_chart, name='line_chart'),  # New URL for the line chart
 ]
 
 handler404 = custom_404

@@ -37,3 +37,5 @@ class BlogTrashAdmin(admin.ModelAdmin):
     list_display = ['title', 'user', 'deleted_at']
     search_fields = ['title', 'user__username']
     date_hierarchy = 'deleted_at'
+
+

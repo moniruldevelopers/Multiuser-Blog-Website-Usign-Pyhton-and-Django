@@ -18,7 +18,7 @@
             </li>           
             <li class="nav-item {% if request.path == '/blogs/' %}active{% endif %}">
                 <a class="nav-link" href="{% url 'blogs' %}">Blogs</a>
-            </li>     
+            </li> 
             <li class="nav-item dropdown {% if '/about/' in request.path %}active {% elif '/contact/' in request.path %}active{% endif %} ">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Info
@@ -51,7 +51,7 @@
             <li>
                 
                 {% if request.user.is_authenticated %}
-                <li class="nav-item dropdown {% if '/profile/' in request.path %}active {% elif '/user_notifications/' in request.path %}active {% elif '/wishlist/' in request.path %}active {% endif %} ">
+                <li class="nav-item dropdown {% if '/profile/' in request.path %}active {% elif '/user_notifications/' in request.path %}active {% elif '/wishlist/' in request.path %}active {% elif '/line_chart/' in request.path %}active {% endif %} ">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     
                       {% if request.user.username %}
@@ -69,6 +69,8 @@
                         {% endif %}
                             
                         </a>
+                     
+                      <a class="dropdown-item {% if '/line_chart/' in request.path %}active{% endif %}" href="{% url 'line_chart' %}"><i class="fa fa-history"></i> All Views</a>
                       <a class="dropdown-item {% if '/wishlist/' in request.path %}active{% endif %}" href="{% url 'wishlist' %}"><i class="fa fa-bookmark"></i> Saved Blogs</a>
                       <a class="dropdown-item {% if '/deleted_blogs/' in request.path %}active{% endif %}" href="{% url 'deleted_blogs' %}"><i class="fa fa-trash"></i> Deleted Blogs</a>
                       <a class="dropdown-item" href="{% url 'logout' %}"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>

@@ -12,13 +12,42 @@ from django.contrib import messages
 from django.utils.text import slugify
 
 
+#for chartjs
+from django.db.models import Sum
+from django.views.decorators.http import require_GET
+from django.db.models import Sum
+from django.http import JsonResponse
+from django.db.models.functions import TruncMonth
+@login_required(login_url='login')
+def line_chart(request):
+    return render(request, 'chart.html')
 
-def share_page(request):
-    # Your logic to retrieve data or context for the page goes here
-    context = {
-        'page_data': 'Your page data goes here',
-    }
-    return render(request, 'share_page.html', context)
+@require_GET
+def user_blog_views_chart(request):
+    user_monthly_views = (
+        Blog.objects
+        .filter(user=request.user)
+        .annotate(month=TruncMonth('created_date'))
+        .values('month')
+        .annotate(views_sum=Sum('views'))
+        .order_by('month')
+    )
+
+    labels = [entry['month'].strftime('%Y-%m') for entry in user_monthly_views]
+    data = [entry['views_sum'] for entry in user_monthly_views]
+
+    return JsonResponse({'labels': labels, 'data': data})
+
+
+
+
+
+# def share_page(request):
+#     # Your logic to retrieve data or context for the page goes here
+#     context = {
+#         'page_data': 'Your page data goes here',
+#     }
+#     return render(request, 'share_page.html', context)
 
 
 
@@ -447,6 +476,9 @@ def deleted_blogs(request):
     # Fetch deleted blogs for the current user
     deleted_blogs = BlogTrash.objects.filter(user=request.user).order_by('-deleted_at')
     return render(request, 'deleted_blogs.html', {'deleted_blogs': deleted_blogs})
+
+
+
 
 
 
