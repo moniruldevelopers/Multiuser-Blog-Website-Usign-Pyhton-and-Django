@@ -19,11 +19,12 @@
             <li class="nav-item {% if request.path == '/blogs/' %}active{% endif %}">
                 <a class="nav-link" href="{% url 'blogs' %}">Blogs</a>
             </li> 
-            <li class="nav-item dropdown {% if '/about/' in request.path %}active {% elif '/contact/' in request.path %}active{% endif %} ">
+            <li class="nav-item dropdown {% if '/top-bloggers/' in request.path %}active {% elif '/about/' in request.path %} active {% elif '/contact/' in request.path %} active {% endif %}  ">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Info
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">                  
+                    <a class="dropdown-item {% if '/top-bloggers/' in request.path %}active{% endif %}" href="{% url 'top_bloggers_view' %}"> Top-Bloggers of UGV </a>
                     <a class="dropdown-item {% if '/about/' in request.path %}active{% endif %}" href="{% url 'about' %}"> About Us </a>
                    
                     <a class="dropdown-item {% if '/contact/' in request.path %}active{% endif %}" href="{% url 'contact' %}">Contact Us </a> 

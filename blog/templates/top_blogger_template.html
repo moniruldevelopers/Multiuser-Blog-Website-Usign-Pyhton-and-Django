@@ -2,25 +2,87 @@
 {% load static %}
 
 {% block title %}
-  Search-Result
+Top Bloggers of bangladesh
 {% endblock title %}
 
 
 {% block content %}
-  <!-- top_blogger_template.html -->
 
-  <section>
-    <h2>Top Blogger of the Month</h2>
-    <ul>
-        {% for blogger in top_blogger %}
-            <li>
-                <img src="{{ blogger.user_profile_image.url }}" alt="{{ blogger.user__username }} Image">
-                <p>{{ blogger.user__username }}</p>
-                <p>Total Posts: {{ blogger.total_likes }}</p>
-            </li>
-        {% endfor %}
-    </ul>
+
+
+<section class="pt-5 ">
+    <style>
+        /* Add your custom styles here */
+        .custom-shadow {
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+           
+            margin: 20px;
+            border-radius: 10px;
+            background-color: #fff;
+        }
+    </style>
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <h3 class="mb-3">Top Bloggers of EBlog UGV </h3>
+            </div>
+            <div class="col-6 text-right">
+                <a class="btn btn-primary mb-3 mr-1" href="#carouselExampleIndicators2" role="button" data-slide="prev">
+                    <i class="fa fa-arrow-left"></i>
+                </a>
+                <a class="btn btn-primary mb-3 " href="#carouselExampleIndicators2" role="button" data-slide="next">
+                    <i class="fa fa-arrow-right"></i>
+                </a>
+            </div>
+            <div class="col-12">
+                <div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+
+                        {% for blogger in top_bloggers %}
+                            {% if forloop.first or forloop.counter0|divisibleby:3 %}
+                                <div class="carousel-item{% if forloop.first %} active{% endif %}">
+                                    <div class="row">
+                            {% endif %}
+
+                            <div class="col-md-4 mb-3 ">
+                                <div class="card custom-shadow ">
+                                    {% if blogger.profile_image %}
+                                    <a href="{% url 'view_user_information' blogger.username %}">
+                                            <img style="width: 100%; height:320px" class="img" alt="{{blogger.username}}" src="{{ blogger.profile_image.url }}">
+                                    </a>
+                                            {% else %}
+                                            <!-- Provide a default image or alternative content -->
+                                            <!-- For example, you can use a placeholder image or leave it empty -->
+                                           
+                                            <span class="text-center">User Have no profile img</span>
+
+                                        {% endif %}
+                                    <div class="card-body text-center ">
+                                        <a style="color: #F5831F;" href="{% url 'view_user_information' blogger.username %}">
+                                        <h4 class="card-title">{{ blogger.username }}</h4>
+                                        <p class="card-text">Total Posts: {{ blogger.total_blogs }}</p>
+                                        <p class="card-text">Total Views: {{ blogger.total_views }}</p>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {% if forloop.counter|divisibleby:3 or forloop.last %}
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
+
+
+
+
 
 {% endblock content %}
   

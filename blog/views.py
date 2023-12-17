@@ -11,7 +11,7 @@ from django.db.models import Q
 from django.contrib import messages
 from django.utils.text import slugify
 #for chartjs
-from django.db.models import Sum
+from django.db.models import Sum, Count
 from django.views.decorators.http import require_GET
 from django.http import JsonResponse
 from django.db.models.functions import TruncMonth
@@ -20,26 +20,27 @@ from django.db.models.functions import TruncMonth
 
 #for top blogger 
 
-# from django.contrib.auth.models import User
-# from user_profile.forms import User
-# from django.utils import timezone
+from django.contrib.auth.models import User
+from user_profile.forms import User
+from django.utils import timezone
 
-# def get_top_blogger():
-#     current_month = timezone.now().month
-#     top_blogger = (
-#         Blog.objects.filter(created_date__month=current_month)
-#         .values('user__username', 'user__profile_image', 'user__id')
-#         .annotate(total_likes=Sum('likes'))
-#         .order_by('-total_likes')[:30]
-#     )
-#     return top_blogger
+from django.db.models import Count, Sum
 
-# def top_blogger_view(request):
-#     top_blogger = get_top_blogger()
-#     context = {'top_blogger': top_blogger}
-#     return render(request, 'top_blogger_template.html', context)
+def get_top_bloggers():
+    top_bloggers = (
+        User.objects.annotate( 
+            total_blogs=Count('user_blogs'),
+            total_views=Sum('user_blogs__views')
+        )
+        .order_by('-total_views')[:30]
+    )
+    return top_bloggers
 
 
+def top_bloggers_view(request):
+    top_bloggers = get_top_bloggers()
+    context = {'top_bloggers': top_bloggers}
+    return render(request, 'top_blogger_template.html', context)
 
 
 @login_required(login_url='login')
@@ -61,17 +62,6 @@ def user_blog_views_chart(request):
     data = [entry['views_sum'] for entry in user_monthly_views]
 
     return JsonResponse({'labels': labels, 'data': data})
-
-
-
-
-
-# def share_page(request):
-#     # Your logic to retrieve data or context for the page goes here
-#     context = {
-#         'page_data': 'Your page data goes here',
-#     }
-#     return render(request, 'share_page.html', context)
 
 
 
@@ -102,16 +92,19 @@ def remove_from_wishlist(request, slug):
 
 
 # Create your views here.
-def home(request):  
+def home(request):
     blogs = Blog.objects.order_by('-created_date')
     most_liked = Blog.objects.order_by('-likes')[:15]    
     populars = Blog.objects.order_by('-views')[:15]
-    tags = Tag.objects.order_by('-created_date')[:15]  
+    tags = Tag.objects.order_by('-created_date')[:15] 
+    top_bloggers = get_top_bloggers() 
     context = {
         'blogs': blogs,
         'tags':tags, 
         'populars': populars,  
-        'most_liked': most_liked,       
+        'most_liked': most_liked,
+        'top_bloggers': top_bloggers, 
+          
     }
     return render(request, 'home.html',context)
 

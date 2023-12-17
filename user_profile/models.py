@@ -39,7 +39,7 @@ class User(AbstractUser):
     profile_image = models.ImageField(        
         null = True,
         blank = True,        
-        upload_to=UploadToPath('users_images')
+        upload_to=UploadToPath('users_images'),        
     )
     followers = models.ManyToManyField("Follow")
 

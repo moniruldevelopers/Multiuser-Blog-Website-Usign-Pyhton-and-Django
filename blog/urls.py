@@ -28,7 +28,7 @@ path('deleted_blogs/', deleted_blogs, name='deleted_blogs'),
 path('user_blog_views_chart/', user_blog_views_chart, name='user_blog_views_chart'),
 path('line_chart/', line_chart, name='line_chart'),  # New URL for the line chart
 
-# path('top-blogger/', top_blogger_view, name='top_blogger'),
+path('top-bloggers/', top_bloggers_view, name='top_bloggers_view'),
 
 ]
 

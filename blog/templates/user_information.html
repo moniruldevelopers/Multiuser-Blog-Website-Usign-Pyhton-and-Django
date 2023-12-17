@@ -20,8 +20,8 @@
 <div class="profile">
     <div class="container">
         <div class="row py-3">
-            <div class="col-md-4">
-                <div class="view-profile text-center">
+            <div class="col-md-4 ">
+                <div class="view-profile text-center shadow-lg p-3 mb-5  rounded">
                     <img id="account_img" class="rounded rounded-circle profile-picture" src="{{account.get_profile_picture}}" alt="{{account.username}}">
         
                     <div class="sidebar-heading seven">
@@ -30,7 +30,7 @@
                       </div>
                     <ul class="text-center py-1">
                         <li class="py-2">
-                            <span>Posts: <strong>{{account.user_blogs.count}}</strong></span>
+                            <span>Blogs: <strong>{{account.user_blogs.count}}</strong></span>
                         </li>
                         <li class="py-1">
                             <span></i> Followers: <strong>{{account.user_followers.count}}</strong></span>
@@ -85,8 +85,8 @@
                     <h2>{{account.username}}'s Blogs</h2>
                   </div>
             </div>
-              <div class="col-md-12">
-                <ul class="list-group-item">
+              <div class="col-md-12 ">
+                <ul class="list-group-item shadow-lg p-3 mb-5  rounded">
                 
                     {% for blog in blogs  %}     
                     <li class="list-group-item py-1">

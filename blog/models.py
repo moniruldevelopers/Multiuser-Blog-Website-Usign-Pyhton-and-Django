@@ -137,14 +137,7 @@ class Blog(models.Model):
 
     def save(self, *args, **kwargs):
         updating = self.pk is not None
-
-        # Generate a unique slug based on the title
-        if updating:
-            self.slug = generate_unique_slug(self, self.title, update=True)
-        else:
-            self.slug = generate_unique_slug(self, self.title)
-
-        # Resize the image if it's larger than 2 MB
+         # Resize the image if it's larger than 2 MB
         if self.banner:
             max_size_bytes = 2 * 1024 * 1024  # 2 MB in bytes
             if self.banner.size > max_size_bytes:
@@ -175,6 +168,14 @@ class Blog(models.Model):
                     save=False,
                 )
 
+
+        # Generate a unique slug based on the title
+        if updating:
+            self.slug = generate_unique_slug(self, self.title, update=True)
+        else:
+            self.slug = generate_unique_slug(self, self.title)
+
+       
         super().save(*args, **kwargs)
 
 
