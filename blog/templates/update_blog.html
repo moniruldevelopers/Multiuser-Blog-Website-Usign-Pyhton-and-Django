@@ -7,58 +7,61 @@
 
 
 {% block content %}
-  
+
 
 <section>
     <div class="container">
         <div class="row py-5 justify-content-center">
-            <div class="col-md-8">
-                <form action="" method="POST" enctype="multipart/form-data">
-                   {{form.media}}
-                    {% csrf_token %} 
-                            
-                    <div class="form-group">
-                        <label for="title">Blog Title:</label> 
-                        <input class="form-control" type="text" name="title" value="{{form.instance.title}}" >
-                        <p class="text-danger py-1">{{form.instance.title.errors}}</p>                        
+            <div class="col-md-8 shadow-lg p-3 mb-5 bg-white rounded">
+                {% if form.errors %}
+                    <div class="alert alert-danger">
+                        <strong>Error:</strong> Please correct the errors below.
+                        {{ form.errors }}
                     </div>
-
+                {% endif %}
+                <form action="" method="POST" enctype="multipart/form-data">
+                    {{ form.media }}
+                    {% csrf_token %} 
+                                        
                     <div class="form-group">
-                        <label for="title">Blog Category:</label>
-                        <select class="form-control" name="category" id="category_id">
-                            {% for category in categories  %}
-                            <option value="{{category.id}}" {% if form.instance.category.pk == category.pk %} selected {% endif %}>{{category}}</option>
+                        <label for="id_title">Blog Title:</label> 
+                        <input class="form-control" type="text" name="title" value="{{ form.instance.title }}">
+                        <p class="text-danger py-1">{{ form.title.errors }}</p>                        
+                    </div>
+                
+                    <div class="form-group">
+                        <label for="id_category">Blog Category:</label>
+                        <select class="form-control" name="category" id="category_id" onfocus='this.size=10;' onblur='this.size=1;' onchange='this.size=1; this.blur();'>
+                            {% for category in categories %}
+                                <option value="{{ category.id }}" {% if form.instance.category.pk == category.pk %} selected {% endif %}>{{ category }}</option>
                             {% endfor %} 
                         </select>
-                        <p class="text-danger py-1">{{form.instance.category.errors}}</p>
+                        <p class="text-danger py-1">{{ form.category.errors }}</p>
+                    </div>
+                
+                    <div class="form-group">
+                        <label for="id_description">Blog Description:</label> 
+                        {{ form.description|safe }}
+                        <p class="text-danger py-1">{{ form.description.errors }}</p>                        
                     </div>
                     
-
                     <div class="form-group">
-                        <label for="title">Blog Description:</label> 
-                        {{form.description|safe}}
-                        <!-- <textarea class="form-control" name="description" id="" cols="30" rows="10">{{form.instance.description}}</textarea> -->
-                        <p class="text-danger py-1">{{form.instance.description.errors}}</p>                        
-
+                        <label for="id_banner">Blog Banner: (730*450 Pixel)</label> 
+                        <input class="form-control" value="{{ form.instance.banner.url }}" type="file" name="banner">  
+                        <p class="text-danger py-1">{{ form.banner.errors }}</p>                        
                     </div>
+                    
                     <div class="form-group">
-                        <label for="title">Blog Banner: ( 730*450 Pixel)</label> 
-                        <input class="form-control" value="{{form.instance.banner.url}}" type="file" name="banner">  
-                        <p class="text-danger py-1">{{form.instance.banner.errors}}</p>                        
-                                            
-                    </div>
-                    <div class="form-group">
-                        <label for="title">Tags:</label> 
+                        <label for="id_tags">Tags: (Enter Comma Separated Values)</label> 
                         <textarea class="form-control" name="tags" id="" cols="30" rows="10" placeholder="Enter Comma Separated Values"></textarea>                        
-                        <p class="text-danger py-1">{{form.instance.tags.errors}}</p>                        
+                        <p class="text-danger py-1">{{ form.tags.errors }}</p>                        
                     </div>
                     
                     <div class="form-group">
-                       <button class="btn btn-primary btn-block mt-3" type="submit"><i class="fa fa-upload"></i> Update</button>
+                        <button class="btn btn-primary btn-block mt-3" type="submit"><i class="fa fa-upload"></i> Update</button>
                     </div>
                 </form>
             </div>
-
         </div>
     </div>
 </section>

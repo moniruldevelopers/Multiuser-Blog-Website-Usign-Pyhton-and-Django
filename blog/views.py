@@ -10,14 +10,38 @@ from django.core import paginator
 from django.db.models import Q
 from django.contrib import messages
 from django.utils.text import slugify
-
-
 #for chartjs
 from django.db.models import Sum
 from django.views.decorators.http import require_GET
-from django.db.models import Sum
 from django.http import JsonResponse
 from django.db.models.functions import TruncMonth
+
+
+
+#for top blogger 
+
+# from django.contrib.auth.models import User
+# from user_profile.forms import User
+# from django.utils import timezone
+
+# def get_top_blogger():
+#     current_month = timezone.now().month
+#     top_blogger = (
+#         Blog.objects.filter(created_date__month=current_month)
+#         .values('user__username', 'user__profile_image', 'user__id')
+#         .annotate(total_likes=Sum('likes'))
+#         .order_by('-total_likes')[:30]
+#     )
+#     return top_blogger
+
+# def top_blogger_view(request):
+#     top_blogger = get_top_blogger()
+#     context = {'top_blogger': top_blogger}
+#     return render(request, 'top_blogger_template.html', context)
+
+
+
+
 @login_required(login_url='login')
 def line_chart(request):
     return render(request, 'chart.html')

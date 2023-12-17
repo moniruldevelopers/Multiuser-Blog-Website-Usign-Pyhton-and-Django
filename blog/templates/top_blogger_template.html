@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+  Search-Result
+{% endblock title %}
+
+
+{% block content %}
+  <!-- top_blogger_template.html -->
+
+  <section>
+    <h2>Top Blogger of the Month</h2>
+    <ul>
+        {% for blogger in top_blogger %}
+            <li>
+                <img src="{{ blogger.user_profile_image.url }}" alt="{{ blogger.user__username }} Image">
+                <p>{{ blogger.user__username }}</p>
+                <p>Total Posts: {{ blogger.total_likes }}</p>
+            </li>
+        {% endfor %}
+    </ul>
+</section>
+
+{% endblock content %}
+  

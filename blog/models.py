@@ -37,18 +37,18 @@ class Wishlist(models.Model):
         return self.user.username + "'s Wishlist"
 # end wish list code 
 
-
-
-
-
-# Create your models here.
+# site start
 class Site(models.Model):
     header_logo = models.ImageField(upload_to="site_info")
     footer_logo = models.ImageField(upload_to="site_info")
     site_name = models.CharField(max_length=25)
     def __str__(self):
         return self.site_name
-        
+  
+# end site 
+
+
+# start category
 class Category(models.Model):
     title = models.CharField(max_length=150, unique=True)
     slug = models.SlugField(null=True, blank=True)
@@ -59,7 +59,9 @@ class Category(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
         super().save(*args, **kwargs)
+# end category
 
+# start tag
 class Tag(models.Model):
     title = models.CharField(max_length=150)
     slug = models.SlugField(null=True, blank=True)
@@ -70,6 +72,7 @@ class Tag(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
         super().save(*args, **kwargs)
+# end tag
 
 def generate_unique_slug(model_instance, title, update=False):
     """
@@ -122,7 +125,7 @@ class Blog(models.Model):
         related_name='user_likes',
         blank=True
     )
-    title = models.CharField(max_length=250)
+    title = models.CharField(max_length=250, unique=True)
     slug = models.SlugField(null=True, blank=True, unique=True)
     views = models.PositiveIntegerField(default=0)
     banner = models.ImageField(upload_to=UploadToPath('blog_banners'))
@@ -134,8 +137,15 @@ class Blog(models.Model):
 
     def save(self, *args, **kwargs):
         updating = self.pk is not None
+
+        # Generate a unique slug based on the title
+        if updating:
+            self.slug = generate_unique_slug(self, self.title, update=True)
+        else:
+            self.slug = generate_unique_slug(self, self.title)
+
+        # Resize the image if it's larger than 2 MB
         if self.banner:
-            # Resize the image if it's larger than 2 MB
             max_size_bytes = 2 * 1024 * 1024  # 2 MB in bytes
             if self.banner.size > max_size_bytes:
                 img = Image.open(self.banner)
@@ -148,7 +158,6 @@ class Blog(models.Model):
                 max_width = 1200  # Adjust the desired width
                 max_height = 800  # Adjust the desired height
 
-                # Use try-except block to handle potential errors with the thumbnail method
                 try:
                     img.thumbnail((max_width, max_height), resample=Image.BICUBIC)
                 except Exception as e:
@@ -158,21 +167,21 @@ class Blog(models.Model):
                 buffer = BytesIO()
                 img.save(buffer, format='JPEG', quality=90, optimize=True)
 
-                # Generate a unique filename based on the blog title
-                filename = f"{slugify(self.title)}_eblogugv.jpg"
+                # Generate a unique filename based on the updated slug
+                filename = f"{slugify(self.slug)}_eblogugv.jpg"
                 self.banner.save(
                     filename,
                     ContentFile(buffer.getvalue()),
                     save=False,
                 )
 
-        if updating:
-            self.slug = generate_unique_slug(self, self.title, update=True)
-            super().save(*args, **kwargs)
-        else:
-            self.slug = generate_unique_slug(self, self.title)
-            super().save(*args, **kwargs)
-    #for trash
+        super().save(*args, **kwargs)
+
+
+
+
+
+#for trash
     def delete(self, *args, **kwargs):
         # Move the blog to the trash
         BlogTrash.objects.create(
@@ -183,6 +192,21 @@ class Blog(models.Model):
         )
         super().delete(*args, **kwargs)
 
+
+
+
+
+
+@deconstructible
+class UploadToPath:
+    def __init__(self, path):
+        self.path = path
+
+    def __call__(self, instance, filename):
+        old_instance = instance.__class__.objects.filter(pk=instance.pk).first()
+        if old_instance:
+            old_instance.banner.delete(save=False)
+        return f"{self.path}/{filename}"
 
 class BlogTrash(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
@@ -207,7 +231,7 @@ class BlogTrash(models.Model):
         self.delete()  # Delete the restored blog from the trash
 
 
-@receiver(pre_delete, sender=Blog)
+@receiver(pre_delete, sender=BlogTrash)
 def delete_media_files(sender, instance, **kwargs):
     if instance.banner:
         instance.banner.delete(save=False)

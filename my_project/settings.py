@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'user_profile',
     'notification',
     #third-party apps
-   'ckeditor',
+    'ckeditor',
     'ckeditor_uploader',
     'crispy_forms',
     'crispy_bootstrap5', 
