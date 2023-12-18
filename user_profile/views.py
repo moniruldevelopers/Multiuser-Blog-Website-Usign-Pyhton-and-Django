@@ -60,8 +60,10 @@ def login_user(request):
                 if user.is_superuser:
                     # Redirect superuser to admin panel dashboard
                     return redirect('admin:index')
-                else:
+                else:                    
+                    messages.success(request, f"Login Success, Welcome {request.user.username} !")
                     return redirect('profile')
+                   
             else:
                 messages.error(request, "Wrong Credentials")
 
