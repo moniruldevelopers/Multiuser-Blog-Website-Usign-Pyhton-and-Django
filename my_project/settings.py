@@ -49,6 +49,7 @@ INSTALLED_APPS = [
   
     #for chart js
     'chartjs',
+     'rangefilter',
 
 
 ]

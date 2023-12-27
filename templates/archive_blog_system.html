@@ -1,0 +1,23 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Blog Archive for {{ current_year }}
+{% endblock title %}
+
+{% block content %}
+<div class="container">
+    <h1>Blog Archive for {{ current_year }}</h1>
+<ul class="py-5">
+    {% for month, data in month_data.items %}
+        <li><a href="{% url 'blog_posts_by_month' current_year month %}">{{ data.name }}</a>: {{ data.count }} posts</li>
+    {% endfor %}
+</ul>
+</div>
+
+{% endblock content %}
+  
+
+
+

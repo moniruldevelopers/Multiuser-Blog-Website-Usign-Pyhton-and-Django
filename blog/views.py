@@ -16,8 +16,10 @@ from django.views.decorators.http import require_GET
 from django.http import JsonResponse
 from django.db.models.functions import TruncMonth
 
-
-
+#for archive
+from django.db.models.functions import TruncMonth
+from datetime import datetime, timedelta
+from calendar import month_name
 #for top blogger 
 
 from django.contrib.auth.models import User
@@ -496,7 +498,35 @@ def deleted_blogs(request):
 
 
 
+def archive_blog_system(request):
+    current_year = datetime.now().year
+    start_date = datetime(current_year, 1, 1)
 
+    # Annotate using TruncMonth for proper grouping
+    monthly_counts = Blog.objects.filter(created_date__gte=start_date).annotate(
+        created_month=TruncMonth('created_date')
+    ).values('created_month').annotate(count=Count('id'))
 
+    month_data = {i['created_month'].month: {'name': i['created_month'].strftime('%B'), 'count': i['count']} for i in monthly_counts}
 
+    context = {
+        'current_year': current_year,
+        'month_data': month_data,
+    }
 
+    return render(request, 'archive_blog_system.html', context)
+
+def blog_posts_by_month(request, year, month):
+    start_date = datetime(year, month, 1)
+    end_date = datetime(year, month % 12 + 1, 1) if month < 12 else datetime(year + 1, 1, 1)
+
+    blog_posts = Blog.objects.filter(created_date__gte=start_date, created_date__lt=end_date)
+
+    context = {
+        'year': year,
+        'month': month,
+        'month_name': month_name[month],
+        'blog_posts': blog_posts,
+    }
+
+    return render(request, 'blog_posts_by_month.html', context)

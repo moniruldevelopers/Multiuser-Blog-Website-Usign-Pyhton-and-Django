@@ -1,0 +1,27 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+{{ month_name }} {{ year }} Blog Posts
+{% endblock title %}
+
+
+{% block content %}
+  
+<div class="container">
+    <h1>{{ month_name }} {{ year }} Blog Posts</h1>
+<ol type="1" >
+    {% for post in blog_posts reversed %}
+        <li style="line-height: 30px;">
+            <a href="{% url 'blog_details' slug=post.slug %}">{{ post.title }}</a>
+            - {{ post.created_date }}
+        </li>
+    {% endfor %}
+</ol>
+</div>
+{% endblock content %}
+  
+
+
+

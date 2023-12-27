@@ -30,6 +30,10 @@ path('line_chart/', line_chart, name='line_chart'),  # New URL for the line char
 
 path('top-bloggers/', top_bloggers_view, name='top_bloggers_view'),
 
+path('archive/', archive_blog_system, name='archive_blog_system'),
+path('archive/<int:year>/<int:month>/', blog_posts_by_month, name='blog_posts_by_month'),
+
+
 ]
 
 handler404 = custom_404

@@ -28,6 +28,7 @@
                     <a class="dropdown-item {% if '/about/' in request.path %}active{% endif %}" href="{% url 'about' %}"> About Us </a>
                    
                     <a class="dropdown-item {% if '/contact/' in request.path %}active{% endif %}" href="{% url 'contact' %}">Contact Us </a> 
+                    <a class="dropdown-item {% if '/archive/' in request.path %}active{% endif %}" href="{% url 'archive_blog_system' %}">Archive Blogs </a> 
                 </div>                                 
             </li>     
             <li class="nav-item dropdown {% if '/category_blogs/' in request.path %} active {% endif %}">
