@@ -353,9 +353,7 @@ class Contact(models.Model):
     message = models.TextField(max_length=500)
     def __str__(self):
         return self.name
-
-
-
+    
 
 
 #for report blog 

@@ -1,6 +1,6 @@
 from django.dispatch import receiver
 from django.db.models.signals import post_save, m2m_changed
-from .models import Blog
+from .models import Blog,Contact
 from user_profile.models import Follow, User
 from notification.models import Notification
 
@@ -11,24 +11,21 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.urls import reverse
 
-# @receiver(post_save, sender=Blog)
-# def send_notification_on_new_blog(sender, instance, created, **kwargs):
-#     if created:
-#         subject = 'New Blog Post Notification'
-#         user = instance.user  # Assuming there's a ForeignKey named 'user' in your Blog model
-#         user_name = user.get_full_name() if user.get_full_name() else user.username
-#         user_email = user.email
+@receiver(post_save, sender=Blog)
+def send_notification_on_new_blog(sender, instance, created, **kwargs):
+    if created:
+        subject = 'New Blog Post Notification'
+        user = instance.user  # Assuming there's a ForeignKey named 'user' in your Blog model
+        user_name = user.get_full_name() if user.get_full_name() else user.username
+        user_email = user.email
 
-#         message = f'A new blog post titled "{instance.title}" has been created by {user_name} ({user_email}).\n\n'
-#         message += f'View the blog post: {settings.BASE_URL}{reverse("blog_details", args=[instance.slug])}'
+        message = f'A new blog post titled "{instance.title}" has been created by {user_name} ({user_email}).\n\n'
+        message += f'View the blog post: {settings.BASE_URL}{reverse("blog_details", args=[instance.slug])}'
         
-#         from_email = settings.DEFAULT_FROM_EMAIL
-#         recipient_list = [settings.ADMIN_EMAIL_ADDRESS]  # Replace with your admin email address
+        from_email = settings.DEFAULT_FROM_EMAIL
+        recipient_list = [settings.ADMIN_EMAIL_ADDRESS]  # Replace with your admin email address
 
-#         send_mail(subject, message, from_email, recipient_list)
-
-
-
+        send_mail(subject, message, from_email, recipient_list)
 
 
 
