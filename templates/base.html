@@ -30,7 +30,7 @@
     
       
 </head>
-<body>
+<body oncontextmenu="return false;">
 <!-- ***** Preloader Start ***** -->
 <!-- <div id="preloader">
     <div class="jumper">
@@ -86,7 +86,11 @@
 <div id="fb-root"></div>
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v18.0" nonce="cT5Tamsf"></script>
 
-
+<script>
+    document.body.addEventListener('contextmenu', function (event) {
+        event.preventDefault();
+    });
+</script>
 
 </body>
 </html>
