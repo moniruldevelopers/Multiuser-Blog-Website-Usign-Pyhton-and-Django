@@ -34,7 +34,9 @@
                     <li><a href="javascript:void(0);"><i class="fa fa-calendar"></i> {{blog.created_date}}</a></li>
                     <li><a href="{% url 'add_to_wishlist' slug=blog.slug %}"><i class="fa fa-bookmark"></i></a></li>
                   </ul>
-                    <p>{{blog.description|safe}}</p> 
+                  
+                    <p >{{blog.description|safe}}</p>
+                  
                     
                     <div class="post-options">
                       <div class="row">
@@ -76,7 +78,7 @@
                         </div>
                         {% endif %}
                         <div class="col-6">
-                    <button id="copyLinkBtn" class="btn btn-primary" style="text-transform: capitalize; padding: 1px 4px; border-radius: 5px; font-size: x-small;"><i class="fa fa-clipboard"></i> Share Post</button>
+                    <button id="copyLinkBtn" class="btn btn-primary" style="text-transform: capitalize; padding: 1px 4px; border-radius: 5px; font-size: x-small;"><i class="fa fa-clipboard"></i> Copy Post Link</button>
                     <a class="btn btn-primary" style="text-transform: capitalize; padding: 1px 4px; border-radius: 5px; font-size: x-small;" href="{% url 'report_blog' slug=blog.slug %}">Report this blog</a>
                     <script>
                       document.getElementById("copyLinkBtn").addEventListener("click", function() {

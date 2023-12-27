@@ -4,7 +4,7 @@
     <nav class="navbar navbar-expand-lg">
         <div class="container">            
             {% for site_instance in site %}
-            <a class="navbar-brand" href="{% url 'home'  %}"><img style="width: 250px; height: 75px;" src="{{site_instance.header_logo.url}}" alt=""></a>
+            <a  class="navbar-brand" href="{% url 'home'  %}"><img draggable="false" style="width: 250px; height: 60px;" src="{{site_instance.header_logo.url}}" alt=""></a>
             {% endfor %}                
        
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,20 +34,19 @@
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Category
                 </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">                  
-                    {% for category in categories|slice:"10" %}
-                    {% for category_count in category_counts %}
-                        {% if category == category_count.category %}
-                            <a class="dropdown-item" href="{% url 'category_blogs' category.slug %}">
-                                <i class="fa fa-list fa-xs" style="color: #f5831f;"></i> {{ category.title }}
-                           <div class="dropdown-divider"></div>
-                            </a>
-                                
-                        {% endif %}
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="max-height: 300px; overflow-y: auto;">
+                    {% for category in categories %}
+                        {% for category_count in category_counts %}
+                            {% if category == category_count.category %}
+                                <a class="dropdown-item" href="{% url 'category_blogs' category.slug %}">
+                                    <i class="fa fa-list fa-xs" style="color: #f5831f;"></i> {{ category.title }}
+                                    <div class="dropdown-divider"></div>
+                                </a>
+                            {% endif %}
                         {% endfor %}
                     {% endfor %}
-                                    
                 </div>
+                
             </li> 
             <li>
                 

@@ -358,4 +358,7 @@ input, textarea{
 }
 
 /* about css */
-
+p {
+text-align: justify !important;
+color: black !important;
+}
