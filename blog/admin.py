@@ -3,6 +3,8 @@ from .models import *
 
 from rangefilter.filters import DateRangeFilter
 # Register your models here.
+
+
 admin.site.register(RestrictedEmail)
 class BlogAdmin(admin.ModelAdmin):
     list_display = ['title', 'user', 'user_email']

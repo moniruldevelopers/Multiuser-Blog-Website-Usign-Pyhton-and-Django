@@ -22,6 +22,9 @@ from django.dispatch import receiver
 from django.db.models.signals import pre_delete,pre_save
 from django.dispatch import receiver
 
+
+
+
 # start wish list code 
 class Wishlist(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
