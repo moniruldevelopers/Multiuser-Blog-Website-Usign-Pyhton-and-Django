@@ -439,7 +439,11 @@ def update_blog(request,slug):
 
     
 def custom_404(request, exception):
-    return render(request, '404.html', status=404)
+    images = Error.object.all()
+    context ={
+        "images": images
+    }
+    return render(request, '404.html',context, status=404)
 
 def about(request):
     teams  = OurTeam.objects.order_by('-created_date')
