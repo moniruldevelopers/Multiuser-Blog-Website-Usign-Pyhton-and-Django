@@ -3,7 +3,6 @@ from .models import *
 
 from rangefilter.filters import DateRangeFilter
 # Register your models here.
-admin.site.register(Error)
 
 
 admin.site.register(RestrictedEmail)

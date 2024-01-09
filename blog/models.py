@@ -23,9 +23,6 @@ from django.db.models.signals import pre_delete,pre_save
 from django.dispatch import receiver
 
 
-class Error(models.Model):
-    image= models.ImageField(upload_to= 'error/')
-
 
 
 # start wish list code 
