@@ -362,3 +362,47 @@ p {
 text-align: justify !important;
 color: black !important;
 }
+
+
+
+
+
+.author-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: left;
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 10px;
+    transition: background-color 0.3s;
+}
+
+.author-card:hover {
+    background-color: #e0e0e0;
+}
+
+.author-card img {
+    width: 150px;
+    height: 150px;
+    border-radius: 10%;
+    margin-right: 20px;
+}
+
+.author-details {
+    flex-grow: 1;
+}
+
+@media (max-width: 768px) {
+    .author-card {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .author-card img {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+}
+
