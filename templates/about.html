@@ -1,64 +1,80 @@
+
+
 {% extends 'base.html' %}
 {% load static %}
-
-{% block title %}
- About-us
-{% endblock title %}
-
-{% block content %} 
-
+{% block title %}About Page{% endblock title %} 
+{% block content %}
 <style>
-  
-    .seven {
+    
+
+.author-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: left;
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 10px;
+    transition: background-color 0.3s;
+}
+
+.author-card:hover {
+    background-color: #e0e0e0;
+}
+
+.author-card img {
+    width: 150px;
+    height: 150px;
+    border-radius: 10%;
+    margin-right: 20px;
+}
+
+.author-details {
+    flex-grow: 1;
+}
+
+@media (max-width: 768px) {
+    .author-card {
+        flex-direction: column;
+        align-items: center;
         text-align: center;
-        margin-top: 30px;
-        padding: 20px;
-        background-color: #fff;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease-in-out;
     }
 
-    .seven:hover {
-        transform: scale(1.05);
+    .author-card img {
+        margin-right: 0;
+        margin-bottom: 10px;
     }
+}
 
-    h2 {
-        color: #333;
-        margin-bottom: 15px;
-    }
-  
+
 </style>
+<div class="container" style="margin-top: 20px;">
+  <h3>Details Our Dedicated Team of Developers</h3>
+  <p>
+    At UGV Blogs, our success is fueled by the passion and expertise of our
+    talented team of developers. Committed to crafting a seamless and enriching
+    online learning experience, our developers bring a diverse set of skills and
+    backgrounds to the table.
+  </p>
+  <hr />
 
-<div class="container"> 
-    <h2 style="margin-top: 15px;">Meet Our Team</h2>    
-        <p style="text-align: justify;">Welcome to the heart of creativity and dedication at the University of Global Village, Barishal! Our team is a diverse group of passionate individuals who come together to bring you engaging and insightful content on our blog. Each member brings a unique set of skills, experiences, and perspectives, making our team a dynamic force in the digital landscape.</p>        
-          
-        <div class="container mt-5">
-            <div class="row">
-                {% for team in teams %}
-                    <div class="col-md-6 col-lg-4 mb-4">
-                        <div class="card team-member-card custom-shadow">
-                            <img class="card-img-top" style="width: auto; height:315px;" src="{{ team.image.url }}" alt="{{ team.name }}">
-                            <div class="card-body">
-                                <h5 class="card-title text-center">{{ team.name }}</h5>
-                                <p class="card-text text-center">{{ team.designation }}</p>
-                                <div class="social-icons">
-                                    <a href="{{ team.fb_url }}" target="_blank"><i class="fa fa-facebook"></i></a>
-                                    <!-- Include only the Facebook social icon -->
-                                </div>
-                            </div>
-                        </div>
+    <div class="row">
+        {% for team in teams  %}
+            <div class="col-md-6 mb-3 ">
+                <a href="{{  team.fb_url }}" class="author-card text-decoration-none shadow-lg">
+                    <!-- Left side (Image) -->
+                    <div>
+                        <img src="{{ team.image.url }}" alt="{{ team.name }} Image">
                     </div>
-                {% endfor %}
+
+                    <!-- Right side (Name and Designation) -->
+                    <div class="author-details">
+                        <h3>{{ team.name }}</h3>
+                        <h6>{{ team.designation }}</h6>                       
+                    </div>
+                </a>
             </div>
-        </div>
-         
-      
-       
-        
-
-        
+      {% endfor %}
+    </div>
 </div>
-
-{% endblock content %}
+{% endblock %}

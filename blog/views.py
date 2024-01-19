@@ -34,7 +34,7 @@ def get_top_bloggers():
             total_blogs=Count('user_blogs'),
             total_views=Sum('user_blogs__views')
         )
-        .order_by('-total_views')[:30]
+        .order_by('-total_views')[:10]
     )
     return top_bloggers
 
