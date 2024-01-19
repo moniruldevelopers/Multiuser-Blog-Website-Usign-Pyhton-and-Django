@@ -19,9 +19,9 @@ SECRET_KEY = 'django-insecure-)u9&eazh1ujq*vcq7+159oab2$iuaj5g--hg5gvaqdg6bcvvd#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["localhost","127.0.0.1", "192.168.3.31"]
 
-
+#python manage.py runserver 192.168.3.31:8000
 # Application definition
 
 INSTALLED_APPS = [
@@ -49,6 +49,8 @@ INSTALLED_APPS = [
     #for chart js
     'chartjs',
      'rangefilter',
+    #  for cleanup files
+    'django_cleanup.apps.CleanupConfig',
 
 
 ]
@@ -148,8 +150,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = 'static'
 STATICFILES_DIRS = [
-    BASE_DIR / "static",   
+    BASE_DIR / "blog/static",   
 ]
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -157,14 +160,14 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 #for email notification
-BASE_URL = 'http://localhost:8000/'
-ADMIN_EMAIL_ADDRESS = 'monirulislam4103@gmail.com'
+# BASE_URL = 'http://localhost:8000/'
+# ADMIN_EMAIL_ADDRESS = 'monirul.developers@gmail.com'
 #password reset
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'monirulislam4103@gmail.com'
-EMAIL_HOST_PASSWORD = 'tpml wrtf ikpz tgya'  
+EMAIL_HOST_USER = 'monirul.developers@gmail.com'
+EMAIL_HOST_PASSWORD = 'yiei bjun ehnh skag'  
 
 # Authentication
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'  # Set email verification to mandatory

@@ -8,24 +8,13 @@ from django.db.models.signals import pre_delete
 from django.dispatch import receiver
 from django.db.models.signals import pre_delete,pre_save
 from django.dispatch import receiver
-
+# validity
+from django.core.validators import FileExtensionValidator 
 #img convert
 from PIL import Image, ImageFilter
 from io import BytesIO
 from django.core.files.base import ContentFile
 from django.core.files.uploadedfile import InMemoryUploadedFile
-
-
-@deconstructible
-class UploadToPath:
-    def __init__(self, path):
-        self.path = path
-
-    def __call__(self, instance, filename):
-        old_instance = instance.__class__.objects.filter(pk=instance.pk).first()
-        if old_instance:
-            old_instance.profile_image.delete(save=False)
-        return f"{self.path}/{filename}"
 
 
 class User(AbstractUser):
@@ -39,7 +28,8 @@ class User(AbstractUser):
     profile_image = models.ImageField(        
         null = True,
         blank = True,        
-        upload_to=UploadToPath('users_images'),        
+        upload_to='users_images/',
+        validators=[FileExtensionValidator(allowed_extensions=['jpg', 'png','jpeg'])]        
     )
     followers = models.ManyToManyField("Follow")
 
@@ -74,11 +64,6 @@ class User(AbstractUser):
             # Update the profile_image field with the resized and compressed image
             self.profile_image = InMemoryUploadedFile(output_io, 'ImageField', "%s.jpg" % self.profile_image.name.split('.')[0], 'image/jpeg', output_io.tell(), None)
             super().save(*args, **kwargs)
-
-@receiver(pre_delete, sender=User)
-def delete_media_files(sender, instance, **kwargs):
-    if instance.profile_image:
-        instance.profile_image.delete(save=False)
 
 
 

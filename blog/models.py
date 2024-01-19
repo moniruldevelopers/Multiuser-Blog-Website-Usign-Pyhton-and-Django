@@ -14,7 +14,8 @@ from io import BytesIO
 from django.core.files.base import ContentFile
 
 
-
+# validity
+from django.core.validators import FileExtensionValidator 
 #blog banner remove 
 from django.utils.deconstruct import deconstructible
 from django.db.models.signals import pre_delete
@@ -96,16 +97,6 @@ def generate_unique_slug(model_instance, title, update=False):
 
     return unique_slug
 
-@deconstructible
-class UploadToPath:
-    def __init__(self, path):
-        self.path = path
-
-    def __call__(self, instance, filename):
-        old_instance = instance.__class__.objects.filter(pk=instance.pk).first()
-        if old_instance:
-            old_instance.banner.delete(save=False)
-        return f"{self.path}/{filename}"
 
 class Blog(models.Model):
     user = models.ForeignKey(
@@ -131,7 +122,10 @@ class Blog(models.Model):
     title = models.CharField(max_length=250, unique=True)
     slug = models.SlugField(null=True, blank=True, unique=True)
     views = models.PositiveIntegerField(default=0)
-    banner = models.ImageField(upload_to=UploadToPath('blog_banners'))
+    banner = models.ImageField(
+        upload_to='blog_banners/',
+        validators=[FileExtensionValidator(allowed_extensions=['jpg', 'png','jpeg'])]
+        )
     description = RichTextField()
     created_date = models.DateTimeField(auto_now_add=True)
 
@@ -201,21 +195,12 @@ class Blog(models.Model):
 
 
 
-@deconstructible
-class UploadToPath:
-    def __init__(self, path):
-        self.path = path
 
-    def __call__(self, instance, filename):
-        old_instance = instance.__class__.objects.filter(pk=instance.pk).first()
-        if old_instance:
-            old_instance.banner.delete(save=False)
-        return f"{self.path}/{filename}"
 
 class BlogTrash(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     title = models.CharField(max_length=255)
-    banner = models.ImageField(upload_to='blog_banners/', null=True, blank=True)
+    banner = models.ImageField(upload_to='blog_trash_banners/', null=True, blank=True)
     description = models.TextField()
     deleted_at = models.DateTimeField(auto_now_add=True)
 
@@ -233,21 +218,6 @@ class BlogTrash(models.Model):
             description=self.description
         )
         self.delete()  # Delete the restored blog from the trash
-
-
-@receiver(pre_delete, sender=BlogTrash)
-def delete_media_files(sender, instance, **kwargs):
-    if instance.banner:
-        instance.banner.delete(save=False)
-
-
-
-
-
-
-
-
-
 
 
 class Comment(models.Model):

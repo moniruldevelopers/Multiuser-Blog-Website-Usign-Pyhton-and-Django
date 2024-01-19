@@ -1,10 +1,24 @@
 {% load static %}
+<style>
+    /* Add a custom class to your navbar for styling */
+    .navbar-sticky {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000; /* Adjust the z-index as needed */
+        background-color: #fff; /* Set the background color of the sticky navbar */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a box shadow for a subtle effect */
+    }
+
+    /* Adjust the padding or margin of the body to accommodate the fixed navbar */
+    
+</style>
 <!-- Header -->
-<header class="">
+<header class="sticky-header">
     <nav class="navbar navbar-expand-lg">
         <div class="container">            
             {% for site_instance in site %}
-            <a  class="navbar-brand" href="{% url 'home'  %}"><img draggable="false" style="width: 250px; height: 60px;" src="{{site_instance.header_logo.url}}" alt=""></a>
+            <a  class="navbar-brand" href="{% url 'home'  %}"><img draggable="false" style="width: 230px; height: 50px;" src="{{site_instance.header_logo.url}}" alt=""></a>
             {% endfor %}                
        
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -94,3 +108,16 @@
         </div>
     </nav>
 </header>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var navbar = document.querySelector('.sticky-header');
+
+        window.addEventListener('scroll', function () {
+            if (window.scrollY > navbar.offsetTop) {
+                navbar.classList.add('navbar-sticky');
+            } else {
+                navbar.classList.remove('navbar-sticky');
+            }
+        });
+    });
+</script>

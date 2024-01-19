@@ -1,8 +1,16 @@
 from django.contrib import admin
 from .models import *
-
 from rangefilter.filters import DateRangeFilter
 # Register your models here.
+#my customizations
+admin.site.site_header = "UGV BLOG"
+admin.site.site_title = "UGV BLOG ADMIN PANEL"
+admin.site.index_title = "Welcome to UGV BLOG  PORTAL"
+
+
+
+
+
 
 
 admin.site.register(RestrictedEmail)
