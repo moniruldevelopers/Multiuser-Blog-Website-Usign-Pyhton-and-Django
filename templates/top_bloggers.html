@@ -7,13 +7,16 @@
               <div class="col-md-6 mb-3 ">
                   <a href="{% url 'view_user_information' blogger.username %}" class="author-card text-decoration-none shadow-lg">
                       <!-- Left side (Image) -->
+                      {% if blogger.profile_image %}
                       <div>
                           <img src="{{ blogger.profile_image.url }}" alt="{{ blogger.username }} Image">
                       </div>
-  
+                      {% else %}
+                      <span class="text-center">User Have no profile img</span>
+                      {% endif %}
                       <!-- Right side (Name and Designation) -->
-                      <div class="author-details">
-                          <h3>{{ blogger.username }}</h3>
+                      <div class="author-details">                         
+                          <h4>{{ blogger.username }}</h4>
                           <h6>Total Posts: {{ blogger.total_blogs }}</h6>                       
                           <h6>Total Views: {{ blogger.total_views }}</h6>                       
                       </div>

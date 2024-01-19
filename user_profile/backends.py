@@ -1,12 +1,14 @@
 from django.contrib.auth.backends import ModelBackend
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Q
 
 from user_profile.models import User
 
 class EmailAuthenticationBackend(ModelBackend):
-    def authenticate(self,request, username=None, password=None, *args, **kwarg):
+    def authenticate(self, request, username=None, password=None, *args, **kwargs):
         try:
-            user = User.objects.get(email = username)
+            # Use case-insensitive lookup for email
+            user = User.objects.get(email__iexact=username)
             if user.check_password(password):
                 return user
             else:
