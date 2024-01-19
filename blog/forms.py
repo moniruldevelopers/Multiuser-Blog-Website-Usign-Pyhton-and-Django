@@ -22,15 +22,11 @@ class TextForm(forms.Form):
 
 class AddBlogForm(forms.ModelForm):
     description = RichTextField()
+    tags = forms.CharField(max_length=255)  # Adjust the max_length as needed
+
     class Meta:
         model = Blog
-        fields = (
-            "title", 
-            "category",
-            "banner",
-            "description",
-           
-        )
+        fields = ['title', 'description', 'category', 'tags', 'banner']
 
 
 #for report blog 

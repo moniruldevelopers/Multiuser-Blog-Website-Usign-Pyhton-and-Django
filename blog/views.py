@@ -28,6 +28,12 @@ from django.utils import timezone
 
 from django.db.models import Count, Sum
 
+# for add blog
+from django.core.exceptions import ValidationError
+
+
+
+
 def get_top_bloggers():
     top_bloggers = (
         User.objects.annotate( 
@@ -351,20 +357,35 @@ def my_blogs(request):
 
 
 
+
+
+
+
+
+
+
+
+
+
 @login_required(login_url='login')
 def add_blog(request):
     form = AddBlogForm()
     if request.method == "POST":
         form = AddBlogForm(request.POST, request.FILES)
         if form.is_valid():
-            tags = request.POST['tags'].split(',')
+            tags = form.cleaned_data['tags'].split(',')
             user = get_object_or_404(User, pk=request.user.pk)
-            category = get_object_or_404(Category, pk=request.POST['category'])
             blog = form.save(commit=False)
-            blog.slug = slugify(blog.title)
             blog.user = user
-            blog.category =category
+            blog.category = form.cleaned_data['category']
             blog.save()
+            # Perform additional form validation
+            if not blog.description:
+                raise ValidationError("Please provide a description for the blog.")
+            
+            # Save the blog after validation
+            blog.save()
+
             for tag in tags:
                 tag_input = Tag.objects.filter(
                     title__iexact = tag.strip(),
@@ -380,12 +401,13 @@ def add_blog(request):
                             slug = slugify(tag.strip())
                         )
                         blog.tags.add(new_tag)
-            messages.success(request, "Blog Added successfully")
+           
+            messages.success(request, "Blog added successfully")
             return redirect('blog_details', slug=blog.slug)
         else:
             print(form.errors)
 
-    context ={
+    context = {
         "form": form,
     }
     return render(request, 'add_blog.html', context)
@@ -393,28 +415,49 @@ def add_blog(request):
 
 
 
-@login_required(login_url='login')
-def update_blog(request,slug):  
-    blog = get_object_or_404(Blog, slug=slug)
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@login_required(login_url='login')
+def update_blog(request, slug):
+    blog = get_object_or_404(Blog, slug=slug)
     form = AddBlogForm(instance=blog)
     if request.method == "POST":
         form = AddBlogForm(request.POST, request.FILES, instance=blog)
-
         if form.is_valid():
             if request.user.pk != blog.user.pk:
                 return redirect('home')
+
+            # Clear existing tags before adding new ones
+            blog.tags.clear()
+
             tags = request.POST['tags'].split(',')
             user = get_object_or_404(User, pk=request.user.pk)
             category = get_object_or_404(Category, pk=request.POST['category'])
             blog = form.save(commit=False)
             blog.user = user
-            blog.category =category
+            blog.category = category
             blog.save()
+
             for tag in tags:
                 tag_input = Tag.objects.filter(
-                    title__iexact = tag.strip(),
-                    slug = slugify(tag.strip())
+                    title__iexact=tag.strip(),
+                    slug=slugify(tag.strip())
                 )
                 if tag_input.exists():
                     t = tag_input.first()
@@ -423,21 +466,38 @@ def update_blog(request,slug):
                     if tag != '':
                         new_tag = Tag.objects.create(
                             title=tag.strip(),
-                            slug = slugify(tag.strip())
+                            slug=slugify(tag.strip())
                         )
                         blog.tags.add(new_tag)
+
             messages.success(request, "Blog Updated successfully")
             return redirect('blog_details', slug=blog.slug)
         else:
             print(form.errors)
 
-    context ={
+    context = {
         "form": form,
         "blog": blog,
     }
     return render(request, 'update_blog.html', context)
 
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 def custom_404(request, exception):
    
     return render(request, '404.html', status=404)

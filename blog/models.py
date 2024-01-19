@@ -119,7 +119,7 @@ class Blog(models.Model):
         related_name='user_likes',
         blank=True
     )
-    title = models.CharField(max_length=250, unique=True)
+    title = models.CharField(max_length=400,unique=True)
     slug = models.SlugField(null=True, blank=True, unique=True)
     views = models.PositiveIntegerField(default=0)
     banner = models.ImageField(

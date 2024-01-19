@@ -44,27 +44,49 @@
                         {{ form.description|safe }}
                         <p class="text-danger py-1">{{ form.description.errors }}</p>
                     </div>
-    
+
                     <div class="form-group">
                         <label for="id_banner">Blog Banner: (730*450 Pixel)</label>
-                        <input class="form-control" value="{{ form.instance.banner.url }}" type="file" name="banner" id="id_banner">
+                        <input class="form-control" type="file" name="banner" id="id_banner">
                         <p class="text-danger py-1">{{ form.banner.errors }}</p>
                     </div>
-    
+
+                    <!-- Display image preview -->
+                    {% if form.instance.banner.url %}
+                        <!-- Thumbnail preview for current banner -->
+                        <div class="form-group">
+                            <label>Current Banner Preview:</label>
+                            <img  src="{{ form.instance.banner.url }}" alt="Current Banner" style="max-width: 150px; max-height: 150px; border-radius: 10px;">
+                        </div>
+                    {% endif %}
+                    <button class="btn btn-primary" type="button" id="editTagsBtn">Edit Tags</button>
+                 
                     <div class="form-group">
-                        <label for="id_tags">Tags: (Enter Comma Separated Values)</label>
-                        <textarea class="form-control" name="tags" id="id_tags" cols="30" rows="10" placeholder="Enter Comma Separated Values"></textarea>
-                        <p class="text-danger py-1">{{ form.tags.errors }}</p>
-                    </div>
-    
+                        <label for="id_tags">Tags: (Existing Tags) tags will be comma separated</label>
+                        <input class="form-control" type="text" name="tags_display" id="id_tags_display" value="{% for tag in blog.tags.all %}{{ tag.title }}{% if not forloop.last %}, {% endif %}{% endfor %}" readonly>
+                        <textarea class="form-control" name="tags" id="id_tags" style="display: none;">{% for tag in blog.tags.all %}{{ tag.title }}{% if not forloop.last %}, {% endif %}{% endfor %}</textarea>
+                    </div>    
                     <div class="form-group">
                         <button class="btn btn-primary btn-block mt-3" type="submit"><i class="fa fa-upload"></i> Update</button>
                     </div>
                 </form>
+               
+                    
             </div>
         </div>
     </div>
     
 </section>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Toggle visibility of tags fields
+        $("#editTagsBtn").click(function() {
+            $("#id_tags_display").toggle();
+            $("#id_tags").toggle();
+        });
+    });
+</script>
 {% endblock content %}
   
