@@ -7,84 +7,66 @@
 {% endblock title %}
 
 {% block content %} 
-<!-- <section class="contact-us">
-    <div class="container">
-      <div class="row">      
-        <div class="col-lg-12">
-          <div class="down-contact">
-            <div class="row">
-              <div class="col-lg-8">
-                <div class="sidebar-item contact-form">
-                  <div class="sidebar-heading">
-                    <h2>Create Your Blog Account</h2>
-                  </div>
-                  <div class="content">
-                    <form id="contact" method="POST" action="" novalidate>
-                      {% csrf_token %}                    
-                      <div class="row">
-                        <div class="col-md-12 col-sm-12">
-                          <fieldset>
-                            <input name="username" {% if form.is_bound %} value={{form.username.value}} {% endif %}                              type="text" id="username_id" placeholder="Type Your Username" >
-                            <p class="py-1 text-danger errors">{{form.username.errors}}</p>
+
+<section class="contact-us">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 ">
+        <div class="down-contact ">
+          <div class="row">
+            <div class="col-lg-8 shadow-lg py-3" style="border-radius: 10px;"> <!-- Added shadow-lg class here -->
+              <div class="sidebar-item contact-form ">
+                <div class="sidebar-heading">
+                  <h2>Create your account</h2>
+                </div>
+                <div class="content ">
+                  <form id="contact" action="" method="POST" novalidate>
+                    {% csrf_token %}
+                    <div class="row">
+                      <div class="col-md-12 col-sm-12 ">
+                        <fieldset>
+                          <label for="username_id">Username</label>
+                          <input name="username" {% if form.is_bound %} value="{{form.username.value}}" {% endif %} type="text" id="username_id" placeholder="Your username">
+                          <p class="py-1 text-danger errors">{{form.username.errors}}</p>
                         </fieldset>
-                        </div>
-                        <div class="col-md-12 col-sm-12">
-                            <fieldset>
-                              <input name="email" {% if form.is_bound %} value={{form.email.value}} {% endif %}  type="email" id="email_id" placeholder="Type Your  Email" >
-                              <p class="py-1 text-danger errors">{{form.email.errors}}</p>
-                            </fieldset>
-                          </div>
-                          <div class="col-md-12 col-sm-12">
-                            <fieldset>
-                              <input name="password" type="password" id="password_id" placeholder="Type Your Password" >
-                              <p class="py-1 text-danger errors">{{form.password.errors}}</p>
-                            </fieldset>
-                          </div>
-                        <div class="col-md-12 col-sm-12">
+                      </div>
+                      <div class="col-md-12 col-sm-12">
                           <fieldset>
-                            <input name="confirm_password" type="password" id="confirm_password_id" placeholder="Retype Password" >
-                            <p class="py-1 text-danger errors">{{form.confirm_password.errors}}</p>
-                        </fieldset>
-                        </div>
-                        <div class="col-lg-12">
-                          <fieldset>
-                            <button type="submit" id="form-submit" class="main-button mr-2"><i class="fa fa-user-plus"></i> Signup</button>                         
+                            <label for="email_id">Email</label>
+                            <input name="email" {% if form.is_bound %} value="{{form.email.value}}" {% endif %} type="email" id="email_id" placeholder="Your email">
+                            <p class="py-1 text-danger errors">{{form.email.errors}}</p>
                           </fieldset>
                         </div>
+                        <div class="col-md-12 col-sm-12">
+                          <fieldset>
+                            <label for="password_id">Password</label>
+                            <input name="password" type="password" id="password_id" placeholder="Your password">
+                            <p class="py-1 text-danger errors">{{form.password.errors}}</p>
+                          </fieldset>
+                        </div>
+                      <div class="col-md-12 col-sm-12">
+                        <fieldset>
+                          <label for="confirm_password_id">Confirm Password</label>
+                          <input name="confirm_password" type="password" id="confirm_password_id" placeholder="Retype password">
+                          <p class="py-1 text-danger errors">{{form.confirm_password.errors}}</p>
+                        </fieldset>
                       </div>
-                    </form>
-                  </div>
+                      <div class="col-lg-12">
+                        <fieldset>
+                          <button type="submit" id="form-submit" class="main-button mr-2" style="border-radius: 10px;"><i class="fa fa-user-plus"></i> Signup</button>
+                        </fieldset>
+                      </div>
+                    </div>
+                  </form>
                 </div>
-              </div>           
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </section> -->
-
-
-  <div class="container mt-3 mb-5">
-    <div class="row justify-content-center">
-      <div class="shadow-lg col-lg-6 col-md-6 p-3 bg-white rounded">
-        <h2 class="text-center">Register</h2>  
-        <form method="POST" action="{% url 'account_signup' %}">
-          {% csrf_token %}
-          {{ form|crispy }}
-          <button style="border-radius: 5px;" type="submit" class="btn btn-primary"><i class="fa fa-user-plus"></i> Sign Up</button>
-        </form>
-        {% if form.errors %}
-          <div class="alert alert-danger">
-            <strong>Error:</strong> Please correct the errors below.
-            {{ form.errors }}
-          </div>
-        {% endif %}
-      </div>
-    </div>
   </div>
-  
-
-
+</section>
 
 
  {% endblock content %}

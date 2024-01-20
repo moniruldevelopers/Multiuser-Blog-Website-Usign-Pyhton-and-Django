@@ -1,6 +1,6 @@
 from django.contrib.auth.backends import ModelBackend
 from django.core.exceptions import ObjectDoesNotExist
-from django.db.models import Q
+from django.db.models import Q  # Import Q for case-insensitive lookup
 
 from user_profile.models import User
 
@@ -8,7 +8,7 @@ class EmailAuthenticationBackend(ModelBackend):
     def authenticate(self, request, username=None, password=None, *args, **kwargs):
         try:
             # Use case-insensitive lookup for email
-            user = User.objects.get(email__iexact=username)
+            user = User.objects.get(Q(email__iexact=username) | Q(username__iexact=username))
             if user.check_password(password):
                 return user
             else:

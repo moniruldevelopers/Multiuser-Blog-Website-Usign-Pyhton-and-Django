@@ -9,34 +9,24 @@ from django.contrib.auth.decorators import login_required
 from .models import User,Follow
 from datetime import datetime
 from notification.models import Notification
-
 from django.core.paginator import PageNotAnInteger, EmptyPage, Paginator
 
-
-# email varificcation here.
-from allauth.account.forms import SignupForm
-# from .forms import SignupForm
-# email varificcation here.
-
+#prfile
 
 
 @never_cache
 @not_logged_in_required
 def register_user(request):
+    form = UserRegistrationForm()
+
     if request.method == "POST":
-        form = SignupForm(request.POST)
+        form = UserRegistrationForm(request.POST)
         if form.is_valid():
-            user = form.save(request)
-            messages.success(request, "Registration Successful. Please check your email to verify your account.")
+            user = form.save(commit=False)
+            user.set_password(form.cleaned_data.get('password'))
+            user.save()
+            messages.success(request, "Registration sucessful")
             return redirect('login')
-        else:
-            # Form is not valid, so it has errors. Render the registration page with the form and errors.
-            context = {
-                "form": form
-            }
-            return render(request, 'registration.html', context)
-    else:
-        form = SignupForm()
 
     context = {
         "form": form
@@ -95,50 +85,27 @@ def get_greeting():
         return "Good Night"
 
 
-
-
 @login_required(login_url='login')
-def profile(request):   
-    greeting = get_greeting()
+def profile(request):
     account = get_object_or_404(User, pk=request.user.pk)
-
+    form = UserProfileUpdateForm(instance=account)
+    
     if request.method == "POST":
         if request.user.pk != account.pk:
             return redirect('home')
-
+        
         form = UserProfileUpdateForm(request.POST, instance=account)
-
-        # Manually handle the update of username and email
-        form.fields['username'].disabled = True
-        form.fields['email'].disabled = True
-
         if form.is_valid():
-            # Do not save username and email from the form
-            account.first_name = form.cleaned_data['first_name']
-            account.last_name = form.cleaned_data['last_name']
-            new_password = form.cleaned_data.get('new_password')
-            if new_password:
-                account.set_password(new_password)
-
-            account.save()
-
-            messages.success(request, "Profile has been updated successfully")
+            form.save()
+            messages.success(request, "Profile has been updated sucessfully")
             return redirect('profile')
         else:
             print(form.errors)
-    else:
-        # Create form with initial values
-        form = UserProfileUpdateForm(instance=account)
-        # Disable username and email fields
-        form.fields['username'].disabled = True
-        form.fields['email'].disabled = True
 
     context = {
         "account": account,
-        "form": form,
-        "greeting": greeting,       
+        "form": form
     }
-
     return render(request, 'profile.html', context)
 
 

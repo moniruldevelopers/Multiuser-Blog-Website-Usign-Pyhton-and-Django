@@ -163,6 +163,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # BASE_URL = 'http://localhost:8000/'
 # ADMIN_EMAIL_ADDRESS = 'monirul.developers@gmail.com'
 #password reset
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' #my newline
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
