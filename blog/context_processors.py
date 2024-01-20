@@ -1,7 +1,7 @@
 from .models import Category,Site,Blog, Ugv_Ad
 
 def get_all_categories(request):
-    categories = Category.objects.all()[:20]
+    categories = Category.objects.all()
     category_counts = []
     for category in categories:
         blog_count = Blog.objects.filter(category=category).count()
