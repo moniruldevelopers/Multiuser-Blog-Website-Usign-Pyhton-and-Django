@@ -360,13 +360,6 @@ def my_blogs(request):
 
 
 
-
-
-
-
-
-
-
 @login_required(login_url='login')
 def add_blog(request):
     form = AddBlogForm()

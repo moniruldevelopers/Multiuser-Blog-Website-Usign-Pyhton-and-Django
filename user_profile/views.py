@@ -101,10 +101,12 @@ def profile(request):
             return redirect('profile')
         else:
             print(form.errors)
-
+    greeting = get_greeting()
     context = {
         "account": account,
-        "form": form
+        "form": form,
+        "greeting":greeting,
+        
     }
     return render(request, 'profile.html', context)
 
